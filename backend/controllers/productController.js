@@ -104,3 +104,26 @@ export const updateProduct = async (req, res) => {
         })
     }
 }
+
+
+export const deleteProduct = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const isExist = await Product.findById(id);
+        if (!isExist) return res.status(404).json({
+            status: 'error',
+            data: 'Post not found'
+        });
+
+        await Product.findByIdAndDelete(id);
+        return res.status(200).json({
+            status: 'success',
+            message: 'Product deleted successfully'
+        })
+    } catch (error) {
+        return res.status(500).json({
+            status: "error",
+            message: error.message
+        })
+    }
+}

@@ -1,5 +1,5 @@
 import express from 'express'
-import { addProduct, updateProduct } from '../controllers/productController.js';
+import { addProduct, deleteProduct, updateProduct } from '../controllers/productController.js';
 import { upload } from '../utils/multer.js';
 
 const router = express.Router();
@@ -9,5 +9,6 @@ router.route('/add-product')
 
 router.route('/:id')
     .patch(upload.single('image'), updateProduct)
+    .delete(deleteProduct)
 
 export default router;
