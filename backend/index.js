@@ -1,11 +1,12 @@
-import express from 'express' 
-import dotenv from "dotenv"; 
+import express from 'express'
+import dotenv from "dotenv";
 import mongoose from 'mongoose';
-import cors from 'cors'; 
+import cors from 'cors';
 
 import userRouter from './routes/userRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import cartRouter from './routes/cartRoutes.js';
+import checkoutRouter from './routes/checkoutRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -13,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use('/uploads',express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 
 
 const PORT = process.env.PORT || 5001;
@@ -23,9 +24,10 @@ app.get("/", (req, res) => {
 })
 
 
-app.use('/api',userRouter);
-app.use('/api',productRouter);
-app.use('/api/cart',cartRouter);
+app.use('/api', userRouter);
+app.use('/api', productRouter);
+app.use('/api/cart', cartRouter);
+app.use('/api', checkoutRouter);
 
 
 mongoose.connect(process.env.MONGO_URI).then((val) => {
