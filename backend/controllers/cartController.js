@@ -93,3 +93,30 @@ export const removeFromCart = async (req, res) => {
         });
     }
 }
+
+
+export const getAllCartItems = async (req, res) => {
+    try {
+        const userId = req.user?.id;
+
+        let cart = await Cart.findOne({ user: userId }).populate("items.product"); //mongodb expects filter object i.e. { field: value } while using findOne(), it means-> Find me a cart where the user field equals this userId
+
+        if (!cart) {
+            return res.status(404).json({
+                success: false,
+                message: "Cart not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message:"Your Cart",
+            data: cart,
+        })
+    } catch (error) {
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        });
+    }
+}

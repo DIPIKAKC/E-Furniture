@@ -1,5 +1,5 @@
 import express from "express";
-import { addToCart, removeFromCart } from "../controllers/cartController.js";
+import { addToCart, getAllCartItems, removeFromCart } from "../controllers/cartController.js";
 import { protect } from "../middleware/checkUser.js";
 
 
@@ -10,5 +10,8 @@ router.route('/add')
 
 router.route('/clear')
     .delete(protect, removeFromCart)
+
+router.route('/')
+    .get(protect, getAllCartItems)
 
 export default router;
