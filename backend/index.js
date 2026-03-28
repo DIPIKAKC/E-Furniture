@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api/cart', cartRouter);
-app.use('/api', checkoutRouter);
+app.use('/api/order', checkoutRouter);
 
 
 mongoose.connect(process.env.MONGO_URI).then((val) => {

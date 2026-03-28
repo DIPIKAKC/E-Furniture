@@ -110,9 +110,10 @@ export const getAllCartItems = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message:"Your Cart",
+            message: "Your Cart",
             data: cart,
         })
+
     } catch (error) {
         res.status(500).json({
             status: "error",
