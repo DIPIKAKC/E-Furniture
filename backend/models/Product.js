@@ -39,6 +39,42 @@ const productSchema = new mongoose.Schema({
     image: {
         type: String, // URL of product image
     },
+    likes: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+
+    //indiv user review
+    reviews: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            comment: String,
+            rating: Number,
+            createdAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
+
+    //average rating of all
+    rating: {
+        type: Number,
+        default: 0
+    },
+
+    //number or reviews
+    numReviews: {
+        type: Number,
+        default: 0
+    },
+    
+
 }, { timestamps: true })
 
 const Product = mongoose.model('Product', productSchema);

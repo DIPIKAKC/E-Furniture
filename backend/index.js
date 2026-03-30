@@ -7,6 +7,7 @@ import userRouter from './routes/userRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import cartRouter from './routes/cartRoutes.js';
 import checkoutRouter from './routes/checkoutRoutes.js';
+import activityRouter from './routes/activityRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,7 @@ app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', checkoutRouter);
+app.use('/api', activityRouter);
 
 
 mongoose.connect(process.env.MONGO_URI).then((val) => {
