@@ -39,26 +39,11 @@ const productSchema = new mongoose.Schema({
     image: {
         type: String, // URL of product image
     },
+    
     likes: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
-        }
-    ],
-
-    //indiv user review
-    reviews: [
-        {
-            user: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User"
-            },
-            comment: String,
-            rating: Number,
-            createdAt: {
-                type: Date,
-                default: Date.now
-            }
         }
     ],
 
@@ -73,7 +58,7 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    
+
 
 }, { timestamps: true })
 

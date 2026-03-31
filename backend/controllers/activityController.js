@@ -1,4 +1,5 @@
 import Product from "../models/Product.js";
+import Review from "../models/Review.js";
 
 export const toggleLike = async (req, res) => {
     try {
@@ -29,3 +30,46 @@ export const toggleLike = async (req, res) => {
         });
     }
 }
+
+
+//Review
+
+export const addReview = async (req, res) => {
+    try {
+        const { rating, comment } = req?.body;
+        const productId = req.params?.productId;
+        const userId = req.user?.id;
+
+        const existingReview = await Review.findOne({
+            product: productId,
+            user: userId
+        });
+
+        if (existingReview) {
+            return res.status(400).json({
+                success: false,
+                message: "You already reviewed this product"
+            });
+        }
+
+        const review = await Review.create({
+            product: productId,
+            user: userId,
+            rating,
+            comment
+        });
+
+        res.status(201).json({
+            success: true,
+            message: "Review added successfully",
+            data: review
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
