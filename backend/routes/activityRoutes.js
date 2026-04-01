@@ -1,6 +1,6 @@
 import express from "express";
 import { admin, protect } from "../middleware/checkUser.js";
-import { addReview, getProductReviews, toggleLike, updateReview } from "../controllers/activityController.js";
+import { addReview, deleteReview, getProductReviews, toggleLike, updateReview } from "../controllers/activityController.js";
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ router.route("/like/:productId")
     .post(protect, toggleLike);
 
 //reviews
-//add
+//add, get
 router.route("/review/:productId")
     .get(getProductReviews)
     .post(protect, addReview)
@@ -17,6 +17,7 @@ router.route("/review/:productId")
 //update
 router.route("/review/:reviewId")
     .patch(protect, updateReview)
+    .delete(protect, deleteReview)
 
 
 export default router;

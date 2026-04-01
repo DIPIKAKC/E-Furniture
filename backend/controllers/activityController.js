@@ -22,7 +22,7 @@ export const toggleLike = async (req, res) => {
             success: true,
             likesCount: product.likes.length
         })
-        
+
     } catch (error) {
         res.status(500).json({
             status: "error",
@@ -40,32 +40,32 @@ export const addReview = async (req, res) => {
         const { rating, comment } = req?.body;
         const productId = req.params?.productId;
         const userId = req.user?.id;
-        
+
         const existingReview = await Review.findOne({
             product: productId,
             user: userId
         });
-        
-        if (existingReview) {
-            return res.status(400).json({
-                success: false,
-                message: "You already reviewed this product"
-            });
-        }
-        
+
+        // if (existingReview) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "You already reviewed this product"
+        //     });
+        // }
+
         const review = await Review.create({
             product: productId,
             user: userId,
             rating,
             comment
         });
-        
+
         res.status(201).json({
             success: true,
             message: "Review added successfully",
             data: review
         });
-        
+
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -78,9 +78,58 @@ export const updateReview = async (req, res) => {
     try {
         const { rating, comment } = req.body;
         const reviewId = req.params?.reviewId;
+
+        const review = await Review.findById(reviewId);
+
+        if (!review) {
+            return res.status(404).json({
+                success: false,
+                message: "Review does not exist"
+            });
+        }
+
+        review.rating = rating;
+        review.comment = comment;
+
+        const updatedReview = await review.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Review updated successfully",
+            data: updatedReview
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+export const getProductReviews = async (req, res) => {
+    try {
+        const productId = req.params?.productId;
+
+        const reviews = await Review.find({ product: productId })
+            .populate("user", "username");
+
+        res.status(200).json({
+            success: true,
+            data: reviews
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+
+export const deleteReview = async (req, res) => {
+    try {
+        const reviewId = req.params?.reviewId;
         
         const review = await Review.findById(reviewId);
-        
         if (!review) {
             return res.status(404).json({
                 success: false,
@@ -88,35 +137,19 @@ export const updateReview = async (req, res) => {
             });
         }
         
-    review.rating = rating;
-    review.comment = comment;
-    
-    const updatedReview = await review.save();
-    
-    res.status(200).json({
-        success: true,
-        message: "Review updated successfully",
-        data: updatedReview
-    });
-    
-} catch (error) {
-    res.status(500).json({
-        message: error.message
-    });
-}
-};
+        if (review?.user.toString() !== req.user?.id) {
+            return res.status(403).json({
+                message: "Not authorized"
+            });
+        }
+        
+        await Review.findByIdAndDelete(review);
 
-export const getProductReviews = async (req, res) => {
-    try {
-        const productId = req.params?.productId;
-        
-        const reviews = await Review.find({ product: productId })
-        .populate("user", "username");
-        
         res.status(200).json({
             success: true,
-            data: reviews
+            message: "Review deleted"
         })
+
     } catch (error) {
         res.status(500).json({
             message: error.message
