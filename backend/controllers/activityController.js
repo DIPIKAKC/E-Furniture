@@ -34,8 +34,6 @@ export const toggleLike = async (req, res) => {
     }
 }
 
-
-
 export const getMyLikedProducts = async (req, res) => {
     try {
 
@@ -159,7 +157,6 @@ export const getProductReviews = async (req, res) => {
         });
     }
 };
-
 
 export const deleteReview = async (req, res) => {
     try {

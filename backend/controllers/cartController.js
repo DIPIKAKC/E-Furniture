@@ -94,7 +94,6 @@ export const removeFromCart = async (req, res) => {
     }
 }
 
-
 export const getAllCartItems = async (req, res) => {
     try {
         const userId = req.user?.id;

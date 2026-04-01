@@ -18,7 +18,29 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
 
-     
+    firstName: {
+        type: String,
+        trim: true
+    },
+
+    lastName: {
+        type: String,
+        trim: true
+    },
+
+    companyName: String,
+
+    phone: String,
+
+    address: [{
+        street: String,
+        city: String,
+        province: String,
+        zipCode: String,
+        country: String
+    }]
+
+
 }, { timestamps: true })
 
 const User = mongoose.model('User', userSchema)

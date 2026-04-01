@@ -93,3 +93,46 @@ export const loginUser = async (req, res) => {
         })
     }
 }
+
+export const updateUserProfile = async (req, res) => {
+    try {
+
+        const userId = req.user?.id;
+        const { firstName, lastName, companyName, phone, address } = req.body || {};
+
+        const { id } = req.params;
+
+        const existingUser = await User.findById(userId);
+
+        if (!existingUser) {
+            return res.status(404).json({ status: "error", message: "User doesn't exist" })
+        }
+
+        if (id !== userId) {
+            return res.status(403).json({
+                status: "error",
+                message: "You are not authorized to update this user",
+            });
+        }
+
+        existingUser.firstName = firstName ?? existingUser.firstName;
+        existingUser.lastName = lastName ?? existingUser.lastName;
+        existingUser.companyName = companyName ?? existingUser.companyName;
+        existingUser.phone = phone ?? existingUser.phone;
+        existingUser.address = address ?? existingUser.address;
+
+        await existingUser.save();
+        
+        res.status(200).json({
+            success: true,
+            message: "Profile updated successfully",
+            data: existingUser
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            status: 'error',
+            message: error.message
+        })
+    }
+}
