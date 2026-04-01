@@ -1,5 +1,5 @@
 import express from 'express'
-import { loginUser, registerUser, updateUserProfile } from '../controllers/userController.js';
+import { getUser, loginUser, registerUser, updateUserProfile } from '../controllers/userController.js';
 import { protect } from '../middleware/checkUser.js';
 
 const router = express.Router();
@@ -9,6 +9,9 @@ router.route('/register')
 
 router.route('/login')
     .post(loginUser)
+
+router.route('/')
+    .get(protect, getUser)
 
 router.route('/profile/:id')
     .patch(protect, updateUserProfile)
