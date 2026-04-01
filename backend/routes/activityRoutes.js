@@ -11,6 +11,7 @@ router.route("/like/:productId")
 //reviews
 //add
 router.route("/review/:productId")
+    .get(getProductReviews)
     .post(protect, addReview)
 
 //update

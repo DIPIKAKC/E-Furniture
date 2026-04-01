@@ -106,3 +106,20 @@ export const updateReview = async (req, res) => {
 }
 };
 
+export const getProductReviews = async (req, res) => {
+    try {
+        const productId = req.params?.productId;
+        
+        const reviews = await Review.find({ product: productId })
+        .populate("user", "username");
+        
+        res.status(200).json({
+            success: true,
+            data: reviews
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
