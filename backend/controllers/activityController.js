@@ -1,6 +1,9 @@
 import Product from "../models/Product.js";
 import Review from "../models/Review.js";
+import User from "../models/User.js";
 
+
+//LIKE
 export const toggleLike = async (req, res) => {
     try {
         const productId = req.params?.productId;
@@ -30,6 +33,39 @@ export const toggleLike = async (req, res) => {
         });
     }
 }
+
+
+
+export const getMyLikedProducts = async (req, res) => {
+    try {
+
+        const userId = req.user?.id;
+
+        //checking if "userId" exists in the "likes" array
+        const likedProducts = await Product.find({ "likes": userId });
+
+        //find never returns null, it returns []. so "length" instead of '!likedProducts'
+        if (likedProducts.length === 0) {
+            res.status(400).json({
+                status: "error",
+                message: "You have no liked products."
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: likedProducts
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        });
+    }
+}
+
+
 
 
 
@@ -128,7 +164,7 @@ export const getProductReviews = async (req, res) => {
 export const deleteReview = async (req, res) => {
     try {
         const reviewId = req.params?.reviewId;
-        
+
         const review = await Review.findById(reviewId);
         if (!review) {
             return res.status(404).json({
@@ -136,13 +172,13 @@ export const deleteReview = async (req, res) => {
                 message: "Review does not exist"
             });
         }
-        
+
         if (review?.user.toString() !== req.user?.id) {
             return res.status(403).json({
                 message: "Not authorized"
             });
         }
-        
+
         await Review.findByIdAndDelete(review);
 
         res.status(200).json({
