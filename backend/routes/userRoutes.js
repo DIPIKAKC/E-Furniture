@@ -10,7 +10,7 @@ router.route('/register')
 router.route('/login')
     .post(loginUser)
 
-router.route('/')
+router.route('/user')
     .get(protect, getUser)
 
 router.route('/profile/:id')
