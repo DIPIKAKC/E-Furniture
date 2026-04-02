@@ -99,7 +99,7 @@ export const updateUserProfile = async (req, res) => {
 
         const userId = req.user?.id;
         const { firstName, lastName, companyName, phone, address } = req.body || {};
-
+        
         const { id } = req.params;
 
         const existingUser = await User.findById(userId);
