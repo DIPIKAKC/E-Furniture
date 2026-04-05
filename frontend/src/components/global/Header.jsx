@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom'
 
 export default function Header() {
     return (
-        <header className='w-full h-fit py-4 px-20 flex justify-end items-center space-x-100 border-2'>
+        <header className='w-full h-fit py-4 px-20 flex justify-end items-center space-x-100'>
             <div className='items-center space-x-10'>
-                <NavLink>Home</NavLink>
-                <NavLink>Shop</NavLink>
+                <NavLink to={'/'}>Home</NavLink>
+                <NavLink to={'/shop'}>Shop</NavLink>
                 <NavLink>About</NavLink>
                 <NavLink>Contact</NavLink>
             </div>
