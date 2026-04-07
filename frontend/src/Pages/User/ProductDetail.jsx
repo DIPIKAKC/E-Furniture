@@ -1,5 +1,6 @@
 import { MinusIcon, PlusIcon, Star, StarHalfIcon } from 'lucide-react'
 import React from 'react'
+import ProductCard from '../../components/global/ProductCard'
 
 export default function ProductDetail() {
     return (
@@ -71,21 +72,40 @@ export default function ProductDetail() {
             </div>
 
 
-            <div className='bg-gray-300 my-4 py-4'>
+            <div><hr className='text-gray-400' /></div>
 
-                <div><hr className='text-gray-400' /></div>
-                <div className='flex items-center justify-center gap-10 py-6'>
+            <div className='flex flex-col space-y-6 py-10 px-20'>
+                <div className='flex items-center justify-center gap-10'>
                     <div className='font-semibold text-2xl text-gray-400'>Description</div>
                     <div className='font-semibold text-2xl text-gray-400'>Additional Information</div>
                     <div className='font-semibold text-2xl text-gray-400'>Reviews</div>
                 </div>
-                <div className='flex flex-col gap-5'>
+                <div className='flex flex-col gap-5 px-20'>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos deleniti velit harum magni ab quae?</p>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente dolores, excepturi vel quisquam a accusantium voluptatem incidunt ratione molestiae dolorum aut saepe, facilis nulla non unde perspiciatis labore laboriosam, provident illo itaque tempore. Commodi voluptatem numquam adipisci, amet, obcaecati facere sunt nam nihil nulla debitis quidem officiis dolorem repudiandae iure?</p>
                 </div>
-                <div><hr className='text-gray-400' /></div>
+                <div className='grid grid-cols-2 gap-8'>
+                    <img className='h-80 w-full object-cover rounded-2xl' src="https://images.pexels.com/photos/6580222/pexels-photo-6580222.jpeg" alt="" />
+                    <img className='h-80 w-full object-cover rounded-2xl' src="https://images.pexels.com/photos/6580223/pexels-photo-6580223.jpeg" alt="" />
+                </div>
             </div>
 
+            <div><hr className='text-gray-400' /></div>
+
+            <div className='flex flex-col gap-15 py-10'>
+                <div className='flex flex-col gap-2 items-center'>
+                    <h2 className='font-semibold text-4xl'>Related Products</h2>
+                    <p className='text-gray-400'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis expedita officia consectetur laudantium impedit perferendis!</p>
+                </div>
+                <div className='grid grid-cols-4 px-20'>
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                </div>
+                <button className='justify-center-safe underline underline-offset-5'>View More</button>
+
+            </div>
 
 
 
