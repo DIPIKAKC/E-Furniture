@@ -60,18 +60,31 @@ export default function ProductDetail() {
                     </div>
 
                     <div className='text-gray-400'><hr /></div>
-                    
-                    <div className='flex flex-col gap-1 bg-pink-200'>
+
+                    <div className='flex flex-col gap-1'>
                         <div className='text-sm text-gray-400'>SKU : SS001</div>
                         <div className='text-sm text-gray-400'>Category : Sofas</div>
                         <div className='text-sm text-gray-400'>Tags : Sofa, Chair, Home, Shop</div>
                         <div className='text-sm text-gray-400'>Share : fb</div>
                     </div>
                 </div>
-
             </div>
 
-            <div><hr className='text-gray-400 mt-4' /></div>
+
+            <div className='bg-gray-300 my-4 py-4'>
+
+                <div><hr className='text-gray-400' /></div>
+                <div className='flex items-center justify-center gap-10 py-6'>
+                    <div className='font-semibold text-2xl text-gray-400'>Description</div>
+                    <div className='font-semibold text-2xl text-gray-400'>Additional Information</div>
+                    <div className='font-semibold text-2xl text-gray-400'>Reviews</div>
+                </div>
+                <div className='flex flex-col gap-5'>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos deleniti velit harum magni ab quae?</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente dolores, excepturi vel quisquam a accusantium voluptatem incidunt ratione molestiae dolorum aut saepe, facilis nulla non unde perspiciatis labore laboriosam, provident illo itaque tempore. Commodi voluptatem numquam adipisci, amet, obcaecati facere sunt nam nihil nulla debitis quidem officiis dolorem repudiandae iure?</p>
+                </div>
+                <div><hr className='text-gray-400' /></div>
+            </div>
 
 
 
