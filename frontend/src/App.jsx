@@ -3,6 +3,7 @@ import RootLayOut from "./components/global/RootLayOut";
 import Shop from "./Pages/User/Shop";
 import Home from "./Pages/User/Home";
 import ProductDetail from "./Pages/User/ProductDetail";
+import CartSidebar from "./components/global/CartSidebar";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: '/product',
         element: <ProductDetail />
+      },
+      {
+        path: '/cartside',
+        element: <CartSidebar />
       }
     ]
 

@@ -1,6 +1,7 @@
 import { MinusIcon, PlusIcon, Star, StarHalfIcon } from 'lucide-react'
 import React from 'react'
 import ProductCard from '../../components/global/ProductCard'
+import CartSidebar from '../../components/global/CartSidebar'
 
 export default function ProductDetail() {
     return (
