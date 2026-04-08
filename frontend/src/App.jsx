@@ -4,6 +4,7 @@ import Shop from "./Pages/User/Shop";
 import Home from "./Pages/User/Home";
 import ProductDetail from "./Pages/User/ProductDetail";
 import CartSidebar from "./components/global/CartSidebar";
+import Cart from "./Pages/User/Cart";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: '/cartside',
         element: <CartSidebar />
+      },
+      {
+        path: '/cart',
+        element: <Cart />
       }
     ]
 
