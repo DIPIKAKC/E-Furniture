@@ -1,5 +1,7 @@
-import { MountainIcon } from 'lucide-react'
 import React from 'react'
+import Login from '../../components/auth/Login'
+import Signup from '../../components/auth/Signup'
+import { MountainIcon } from 'lucide-react'
 
 export default function Authentication() {
     return (
@@ -10,28 +12,32 @@ export default function Authentication() {
                     <MountainIcon size={40} className='text-gray-400' />
                     <h1 className='font-bold text-2xl text-gray-400'>Shop</h1>
                     <h2>
-                        breadcrumbs home--My account
+                        breadcrumbs home--shop
                     </h2>
                 </div>
                 <img className='w-full h-70 object-cover ' src='https://images.pexels.com/photos/5379709/pexels-photo-5379709.jpeg' />
             </div>
 
-            <div>
-                <div>
-                    <h3>Login</h3>
-                    div
-                    <form action="">
-                        <label htmlFor="">Username or email address</label>
-                        <input
-                        id='username'
-                        name='username'
-                        type='email'>
-                        </input>
-                        <label htmlFor="">Password</label>
-                    </form>
-                </div>
+
+            <div className='flex gap-50 justify-center py-10 px-20'>
+                <Login />
+                <Signup />
             </div>
 
+            <div className='w-full bg-red-200 p-20 flex justify-between'>
+                <div>
+                    <h1 className='font-bold text-2xl'>Free Delivery</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas, nostrum </p>
+                </div>
+                <div>
+                    <h1 className='font-bold text-2xl'>90 Days Return</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas, nostrum </p>
+                </div>
+                <div>
+                    <h1 className='font-bold text-2xl'>Secure Payment</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas, nostrum </p>
+                </div>
+            </div>
         </div>
     )
 }

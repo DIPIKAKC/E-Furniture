@@ -1,9 +1,9 @@
-import React from 'react'
+import { Children } from "react";
 
-export default function Button() {
+export default function Button({children}) {
   return (
-    <div>
-      this is a button
-    </div>
+    <button className="px-7 py-2 rounded-lg border-1 cursor-pointer">
+      {children}
+    </button>
   )
 }
