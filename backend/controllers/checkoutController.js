@@ -1,5 +1,6 @@
 import Cart from "../models/Cart.js";
 import Order from "../models/Order.js";
+import User from "../models/User.js";
 
 
 export const checkout = async (req, res) => {
@@ -67,3 +68,26 @@ export const getAllMyOrders = async (req, res) => {
         });
     }
 }
+
+export const getBillingDetails = async (req, res) => {
+    try {
+
+        const userId = req.user?.id;
+
+        const user = await User.findById(userId).select(
+            "firstName lastName companyName phone address email"
+        );
+
+        res.status(200).json({
+            success: true,
+            message: "Your Billing detail",
+            data: user,
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: 'false',
+            message: error.message
+        });
+    }
+};
