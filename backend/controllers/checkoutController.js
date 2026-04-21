@@ -22,7 +22,11 @@ export const checkout = async (req, res) => {
         const order = await Order.create({
             user: userId,
             orderItems: cart.items,
-            totalPrice
+            totalPrice,
+            billingDetail:{
+                address,
+                phoneNumber
+            }
         });
 
         // clear cart after checkout

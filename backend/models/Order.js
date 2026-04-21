@@ -20,6 +20,10 @@ const orderSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    billingDetail: {
+      address: String,
+      phoneNumber: String,
+    }
   },
   { timestamps: true }
 );
@@ -28,4 +32,3 @@ const Order = mongoose.model("Order", orderSchema);
 
 export default Order;
 
- 
