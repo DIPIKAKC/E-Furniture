@@ -4,13 +4,22 @@ import { mainApi } from "../../App/mainApi";
 export const postsApi = mainApi.injectEndpoints({
     endpoints: (builder) => ({
 
-        getCheckoutDetail: builder.query({
+        getBillingDetail: builder.query({
             query: (query) => ({
-                url: '/che',
+                url: '/checkout',
                 method: 'GET',
                 params: query //for search
             }),
-            providesTags: ['Post'] 
+            providesTags: ['Checkout'] 
+        }),
+        
+        getBillingDetail: builder.mutation({
+            query: (data) => ({ //data=>checkout object
+                url: '/checkout',
+                method: 'POST',
+                body: data.body
+            }),
+            invalidatesTags: ['Checkout'] 
         }),
 
     })
