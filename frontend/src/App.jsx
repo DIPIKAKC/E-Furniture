@@ -6,6 +6,7 @@ import ProductDetail from "./Pages/User/ProductDetail";
 import CartSidebar from "./components/global/CartSidebar";
 import Cart from "./Pages/User/Cart";
 import Authentication from "./Pages/User/Authentication";
+import Checkout from "./Pages/User/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/authentication',
         element: <Authentication />
+      },
+      {
+        path: '/checkout',
+        element: <Checkout />
       }
     ]
 

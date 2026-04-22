@@ -25,7 +25,8 @@ export const checkout = async (req, res) => {
             totalPrice,
             billingDetail:{
                 address,
-                phoneNumber
+                phoneNumber,
+                additionalInformation
             }
         });
 

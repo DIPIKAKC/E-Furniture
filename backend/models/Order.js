@@ -23,6 +23,7 @@ const orderSchema = new mongoose.Schema(
     billingDetail: {
       address: String,
       phoneNumber: String,
+      additionalInformation: String
     }
   },
   { timestamps: true }
