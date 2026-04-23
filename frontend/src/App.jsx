@@ -7,6 +7,7 @@ import CartSidebar from "./components/global/CartSidebar";
 import Cart from "./Pages/User/Cart";
 import Authentication from "./Pages/User/Authentication";
 import Checkout from "./Pages/User/Checkout";
+import Contactus from "./Pages/User/Contactus";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: '/checkout',
         element: <Checkout />
+      },
+      {
+        path: '/contactus',
+        element: <Contactus />
       }
     ]
 
