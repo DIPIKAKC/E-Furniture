@@ -3,7 +3,7 @@ import Product from '../models/Product.js';
 
 export const addProduct = async (req, res) => {
     try {
-        const {
+        let {
             productName,
             price,
             description,
@@ -12,6 +12,11 @@ export const addProduct = async (req, res) => {
             sizes,
             colors,
         } = req.body || {};
+
+        if (sizes) sizes = JSON.parse(sizes);
+        if (colors) colors = JSON.parse(colors);
+        if (tags) tags = JSON.parse(tags);
+
 
         //from multer
         const image = req.file ? req.file.path.replace(/\\/g, "/") : null;
@@ -41,10 +46,6 @@ export const addProduct = async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500).json({
-            status: 'error',
-            message: error.message
-        })
         res.status(500).json({
             status: 'error',
             message: error.message

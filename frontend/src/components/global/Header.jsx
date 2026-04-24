@@ -9,7 +9,7 @@ export default function Header() {
                 <NavLink to={'/'}>Home</NavLink>
                 <NavLink to={'/shop'}>Shop</NavLink>
                 <NavLink>About</NavLink>
-                <NavLink>Contact</NavLink>
+                <NavLink to={'/contactus'}>Contact</NavLink>
             </div>
             <div className='flex items-center space-x-6'>
                 <NavLink>
