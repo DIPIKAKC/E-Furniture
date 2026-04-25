@@ -1,4 +1,3 @@
-import express from 'express';
 import Product from '../models/Product.js';
 
 export const addProduct = async (req, res) => {
@@ -19,7 +18,8 @@ export const addProduct = async (req, res) => {
 
 
         //from multer
-        const image = req.file ? req.file.path.replace(/\\/g, "/") : null;
+        const image = req.file?.path.replace(/\\/g, "/");
+        console.log(req.file)
 
         if (!productName || !price || !description || !category || !image) {
             return res.status(400).json({
@@ -65,7 +65,7 @@ export const updateProduct = async (req, res) => {
             sizes,
             colors,
         } = req.body || {};
-        const image = req.file ? req.file.path.replace(/\\/g, "/") : null;
+        const image = req.file?.path.replace(/\\/g, "/");
 
         const updateData = {
             ...(productName && { productName }),
@@ -139,7 +139,7 @@ export const getAllProducts = async (req, res) => {
         }
         return res.status(200).json({
             status: "success",
-            posts: products
+            products: products
         })
 
     } catch (error) {

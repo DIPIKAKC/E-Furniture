@@ -1,5 +1,10 @@
-import express from 'express'
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+dotenv.config({ path: "./.env" });
+
+console.log(process.env.API_KEY);
+console.log(process.env.API_SECRET);
+console.log(process.env.CLOUD_NAME);
+
 import mongoose from 'mongoose';
 import cors from 'cors';
 
@@ -9,13 +14,13 @@ import cartRouter from './routes/cartRoutes.js';
 import checkoutRouter from './routes/checkoutRoutes.js';
 import activityRouter from './routes/activityRoutes.js';
 
-dotenv.config();
+import express from 'express'
 const app = express();
 
 
-app.use(express.json());
 app.use(cors());
-app.use('/uploads', express.static('uploads'));
+app.use(express.json());
+// app.use('/uploads', express.static('uploads'));
 
 
 const PORT = process.env.PORT || 5001;
