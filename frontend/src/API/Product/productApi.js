@@ -20,7 +20,24 @@ export const productApi = mainApi.injectEndpoints({
             }),
             invalidatesTags: ['Product']
         }),
-    }), 
+
+        getTopProducts: builder.query({
+            query: () => ({
+                url: 'products/top',
+                method: 'GET',
+            }),
+            providesTags: ['Product']
+        }),
+        
+        getRecentProducts: builder.query({
+            query: () => ({
+                url: 'products/recent',
+                method: 'GET',
+            }),
+            providesTags: ['Product']
+        }),
+
+    }),
 
 
 })
