@@ -47,12 +47,6 @@ export default function Shop() {
 
                 <div className='py-10 px-20 grid grid-cols-4 gap-8'>
                     <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
                 </div>
 
                 <div className='flex items-center space-x-5 justify-center-safe'>

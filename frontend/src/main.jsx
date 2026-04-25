@@ -4,9 +4,11 @@ import './index.css'
 import App from './App.jsx'
 import { store } from './App/store.js'
 import { Provider } from 'react-redux'
+import { Toaster } from 'react-hot-toast'
 
 createRoot(document.getElementById('root')).render(
     <Provider store={store}>
+        <Toaster position='top-right' toastOptions={{ duration: 2000 }} />
         <App />
     </Provider>
 )

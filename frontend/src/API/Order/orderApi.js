@@ -1,7 +1,7 @@
 import { mainApi } from "../../App/mainApi";
 
 //TagSystem=> for cache management as when using rtk query data is not re-fetched after updating something. it gets from cache memory
-export const postsApi = mainApi.injectEndpoints({
+export const orderApi = mainApi.injectEndpoints({
     endpoints: (builder) => ({
 
         getBillingDetail: builder.query({
@@ -12,8 +12,8 @@ export const postsApi = mainApi.injectEndpoints({
             }),
             providesTags: ['Checkout'] 
         }),
-        
-        getBillingDetail: builder.mutation({
+
+        checkoutCart: builder.mutation({
             query: (data) => ({ //data=>checkout object
                 url: '/checkout',
                 method: 'POST',
@@ -22,7 +22,9 @@ export const postsApi = mainApi.injectEndpoints({
             invalidatesTags: ['Checkout'] 
         }),
 
+        
+
     })
 })
 
-export const { useGetPostsQuery, useGetSinglePostQuery, useGetMyPostsQuery, useCreatePostMutation, useUpdatePostMutation, useRemovePostMutation, useToggleLikePostMutation } = postsApi;
+export const { useGetBillingDetailQuery, useCheckoutCartMutation } = orderApi;

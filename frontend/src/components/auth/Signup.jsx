@@ -33,10 +33,11 @@ export default function Signup() {
                     email: "",
                     password: "",
                 }}
-                onSubmit={async (val) => {
+                onSubmit={async (val,{resetForm}) => {
                     try {
                         const response = await userRegister(val).unwrap();
                         toast.success('User Registered Successfully');
+                        resetForm();
                         console.log(response);
                     } catch (error) {
                         toast.error(error?.data?.data || error?.data?.message)
@@ -44,7 +45,7 @@ export default function Signup() {
                 }}
                 validationSchema={registerSchema}
             >
-                {({ values, handleChange, errors, touched, handleSubmit }) => (
+                {({ values, handleChange, errors, touched, handleSubmit, resetForm }) => (
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                         <div className="flex flex-col gap-6">
                             <div className="grid gap-2">

@@ -31,7 +31,7 @@ export default function Login() {
                     email: '',
                     password: '',
                 }}
-                onSubmit={async (val) => {
+                onSubmit={async (val, {resetForm}) => {
                     try {
                         const response = await userLogin(val).unwrap();
                         dispatch(setUser({
@@ -44,6 +44,7 @@ export default function Login() {
                         }));
 
                         toast.success('Login Successful');
+                        resetForm();
                         nav("/");
 
                         console.log(response);
@@ -53,7 +54,7 @@ export default function Login() {
                 }}
                 validationSchema={loginShcema}
             >
-                {({ values, handleChange, errors, touched, handleSubmit }) => (
+                {({ values, handleChange, errors, touched, handleSubmit, resetForm }) => (
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                         <div className="flex flex-col gap-6">
                             <div className="grid gap-2">

@@ -1,8 +1,10 @@
 import React from 'react'
 import ProductCard from '../../components/global/ProductCard'
 import BlogCard from '../../components/global/BlogCard'
+import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
+    const nav=useNavigate();
     return (
         <div>
             
@@ -38,11 +40,8 @@ export default function Home() {
                 </div>
                 <div className='grid grid-cols-4 px-20'>
                     <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
                 </div>
-                <button className='justify-center-safe underline underline-offset-5'>View More</button>
+                <button onClick={()=>nav('/shop')} className='justify-center-safe underline underline-offset-5 cursor-pointer'>View More</button>
 
             </div>
 
