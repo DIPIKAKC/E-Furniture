@@ -150,6 +150,44 @@ export const getAllProducts = async (req, res) => {
     }
 }
 
+export const getTopProducts = async (req, res) => {
+    try {
+        const products = await Product.find()
+            .sort({ rating: -1 })
+            .limit(5);
+
+        return res.status(200).json({
+            status: "success",
+            products: products
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            status: "error",
+            message: error.message
+        })
+    }
+};
+
+export const getRecentProducts = async (req, res) => {
+    try {
+        const products = await Product.find()
+            .sort({ createdAt: -1 })
+            .limit(2);
+
+        return res.status(200).json({
+            status: "success",
+            products: products
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            status: "error",
+            message: error.message
+        })
+    }
+};
+
 export const getProductById = async (req, res) => {
 
 }
