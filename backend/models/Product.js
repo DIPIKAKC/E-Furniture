@@ -19,8 +19,8 @@ const productSchema = new mongoose.Schema({
     },
 
     category: {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category"
     },
 
     tags: [{
@@ -39,7 +39,7 @@ const productSchema = new mongoose.Schema({
     image: {
         type: String, // URL of product image
     },
-    
+
     likes: [
         {
             type: mongoose.Schema.Types.ObjectId,
