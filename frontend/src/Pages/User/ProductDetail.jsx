@@ -6,6 +6,7 @@ import { useGetAllProductsQuery, useGetSingleProductQuery } from '../../API/Prod
 import { useParams } from 'react-router-dom';
 import { FaFacebook } from 'react-icons/fa';
 import { BsInstagram } from 'react-icons/bs';
+import Breadcrumb from '../../components/global/Breadcrumb';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -28,7 +29,7 @@ export default function ProductDetail() {
     return (
         <div>
             <div className='bg-amber-100 py-8 px-20'>
-                breadcrumbs
+                <Breadcrumb productName={product?.productName}/>
             </div>
 
             {/* product */}

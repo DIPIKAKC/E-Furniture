@@ -2,6 +2,7 @@ import { ChevronDownIcon, DotSquareIcon, FilterIcon, FilterXIcon, HandFistIcon, 
 import React, { useState } from 'react'
 import ProductCard from '../../components/global/ProductCard'
 import { useGetAllCategoriesQuery, useGetAllProductsQuery } from '../../API/Product/productApi';
+import Breadcrumb from '../../components/global/Breadcrumb';
 
 export default function Shop() {
     const [filters, setFilters] = useState({
@@ -24,7 +25,7 @@ export default function Shop() {
                     <MountainIcon size={40} className='text-gray-400' />
                     <h1 className='font-bold text-2xl text-gray-400'>Shop</h1>
                     <h2>
-                        breadcrumbs home--shop
+                        <Breadcrumb />
                     </h2>
                 </div>
                 <img className='w-full h-70 object-cover ' src='https://images.pexels.com/photos/5379709/pexels-photo-5379709.jpeg' />

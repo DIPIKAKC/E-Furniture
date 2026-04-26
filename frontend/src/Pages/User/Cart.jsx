@@ -1,5 +1,6 @@
 import { Delete, DeleteIcon, Minus, MountainIcon, Plus, Trash2, Trash2Icon, TrashIcon } from 'lucide-react'
 import React from 'react'
+import Breadcrumb from '../../components/global/Breadcrumb'
 
 export default function Cart() {
     return (
@@ -10,7 +11,7 @@ export default function Cart() {
                     <MountainIcon size={40} className='text-gray-400' />
                     <h1 className='font-bold text-2xl text-gray-400'>Shop</h1>
                     <h2>
-                        breadcrumbs home--cart
+                        <Breadcrumb />
                     </h2>
                 </div>
                 <img className='w-full h-70 object-cover ' src='https://images.pexels.com/photos/5379709/pexels-photo-5379709.jpeg' />
