@@ -131,7 +131,19 @@ export const deleteProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find();
+        const { category, tag } = req.query;
+
+        let filter = {};
+
+        if (category) {
+            filter.category = category;
+        }
+
+        if (tag) {
+            filter.tags = { $in: [tag] };
+        }
+
+        const products = await Product.find(filter).populate("category");
 
         if (!products) {
             return res.status(404).json({
@@ -139,9 +151,12 @@ export const getAllProducts = async (req, res) => {
                 message: "No products found"
             })
         }
+
+        const total = await Product.countDocuments();
         return res.status(200).json({
             status: "success",
-            products: products
+            products: products,
+            total:total
         })
 
     } catch (error) {
@@ -213,7 +228,7 @@ export const getNewArrival = async (req, res) => {
 export const getProductById = async (req, res) => {
     const { id } = req.params;
     try {
-        const singleProduct = await Product.findById(id);
+        const singleProduct = await Product.findById(id).populate("category");
         return res.status(200).json({
             status: "success",
             singleProduct

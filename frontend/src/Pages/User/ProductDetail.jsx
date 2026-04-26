@@ -4,13 +4,24 @@ import ProductCard from '../../components/global/ProductCard'
 import CartSidebar from '../../components/global/CartSidebar'
 import { useGetAllProductsQuery, useGetSingleProductQuery } from '../../API/Product/productApi';
 import { useParams } from 'react-router-dom';
+import { FaFacebook } from 'react-icons/fa';
+import { BsInstagram } from 'react-icons/bs';
 
 export default function ProductDetail() {
     const { id } = useParams();
     const { isLoading, error, data } = useGetSingleProductQuery(id);
     console.log("singleproduct data:", data);
 
-    const { data: allProducts } = useGetAllProductsQuery();
+    const product = data?.singleProduct;
+    console.log("category:", product?.category);
+
+    const { data: allProducts } = useGetAllProductsQuery({
+        category: product?.category?._id,
+        tag: product?.tags,
+    });
+
+    // Excluding the current product from related products
+    const relatedProducts = allProducts?.products?.filter(p => p._id !== id) || [];
 
     if (isLoading) return <h1 className="text-center text-white">Loading...</h1>;
     if (error) return <h1 className="text-center text-red-500">Error loading the product</h1>;
@@ -35,8 +46,8 @@ export default function ProductDetail() {
                 </div>
                 <div className='flex flex-col gap-10 px-20'>
                     <div className='flex flex-col gap-2'>
-                        <h2 className="text-4xl font-bold">Asgaard sofa</h2>
-                        <h3 className='text-xl font-semibold text-gray-400'>Rs. 250,000.00</h3>
+                        <h2 className="text-4xl font-bold">{product?.productName}</h2>
+                        <h3 className='text-xl font-semibold text-gray-400'>Rs. {product?.price?.toLocaleString()}</h3>
                         <div className='flex items-center gap-1'>
                             <Star size={20} />
                             <Star size={20} />
@@ -48,17 +59,23 @@ export default function ProductDetail() {
                         <div className='flex flex-col gap-1'>
                             <h5 className=' text-lg text-gray-400'>Size</h5>
                             <div className='flex items-center gap-2'>
-                                <div className='py-1 px-3 border-1 w-fit rounded-lg text-sm'>L</div>
-                                <div className='py-1 px-3 border-1 w-fit rounded-lg text-sm'>XL</div>
-                                <div className='py-1 px-3 border-1 w-fit rounded-lg text-sm'>XXL</div>
+                                {product?.sizes?.map(size => (
+                                    <div key={size} className='py-1 px-3 border w-fit rounded-lg text-sm cursor-pointer hover:bg-amber-100'>
+                                        {size}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                         <div className='flex flex-col gap-1'>
                             <h5 className=' text-lg text-gray-400'>Color</h5>
                             <div className='flex items-center gap-2'>
-                                <div className='bg-blue-800 size-6 rounded-full'></div>
-                                <div className='bg-pink-300 size-6 rounded-full'></div>
-                                <div className='bg-gray-600 size-6 rounded-full'></div>
+                                {product?.colors?.map(color => (
+                                    <div
+                                        key={color}
+                                        className='size-6 rounded-full border-2 border-gray-300 hover:border-gray-400 cursor-pointer'
+                                        style={{ backgroundColor: color }}   // works if colors are stored as hex/css values
+                                    />
+                                ))}
                             </div>
                         </div>
                         <div className='flex items-center gap-2'>
@@ -74,10 +91,10 @@ export default function ProductDetail() {
                     <div className='text-gray-400'><hr /></div>
 
                     <div className='flex flex-col gap-1'>
-                        <div className='text-sm text-gray-400'>SKU : SS001</div>
-                        <div className='text-sm text-gray-400'>Category : Sofas</div>
-                        <div className='text-sm text-gray-400'>Tags : Sofa, Chair, Home, Shop</div>
-                        <div className='text-sm text-gray-400'>Share : fb</div>
+                        <div className='text-sm text-gray-400'>SKU : {product?._id?.slice(-6).toUpperCase()}</div>
+                        <div className='text-sm text-gray-400'>Category : {product?.category?.name ?? "Uncategorized"}</div>
+                        <div className='text-sm text-gray-400'>Tags : {product?.tags?.length > 0 ? product.tags.join(", ") : "None"}</div>
+                        <div className='text-sm text-gray-400 flex gap-2 items-center'>Share : <FaFacebook /> <BsInstagram /></div>
                     </div>
                 </div>
             </div>
@@ -113,9 +130,16 @@ export default function ProductDetail() {
                     <p className='text-gray-400'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis expedita officia consectetur laudantium impedit perferendis!</p>
                 </div>
                 <div className='grid grid-cols-4 space-y-5 px-20'>
-                    {allProducts?.products?.map((p)=>{
-                        return <ProductCard key={p._id} product={p}/>
-                    })}
+                    {/* {allProducts?.products?.map((p) => {
+                        return <ProductCard key={p._id} product={p} />
+                    })} */}
+                    {relatedProducts.length > 0 ? (
+                        relatedProducts.map((p) => (
+                            <ProductCard key={p._id} product={p} />
+                        ))
+                    ) : (
+                        <p className='col-span-4 text-center text-gray-400'>No related products found.</p>
+                    )}
                 </div>
                 <button className='justify-center-safe underline underline-offset-5'>View More</button>
 

@@ -15,7 +15,7 @@ export default function Home() {
     return (
         <div>
 
-            <div className='w-full h-screen bg-yellow-200 flex items-center justify-end gap-60'>
+            <div onClick={()=>nav(`products/69bc51a6defc171aa6822c16`)}  className='w-full h-screen bg-yellow-200 flex items-center justify-end gap-60'>
                 <div className='flex flex-col gap-3 ml-20'>
                     <h1 className='text-6xl font-semibold'>Rocket Single <br /> Chair</h1>
                     <h2 className='text-2xl underline'>Shop now</h2>
@@ -25,7 +25,7 @@ export default function Home() {
 
             <div className='grid grid-cols-2'>
                 {recentProducts?.products?.map((p) => {
-                    return <div key={p._id} onAbort={()=>nav(`products/${p._id}`)} className='relative'>
+                    return <div key={p._id} onClick={()=>nav(`products/${p._id}`)} className='relative'>
                         <img className='h-130' src={p.image} alt="" />
                         <div className='absolute lg:bottom-30 left-30'>
                             <h2 className='font-semibold text-3xl'>{p.productName}</h2>

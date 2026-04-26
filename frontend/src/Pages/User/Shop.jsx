@@ -1,11 +1,21 @@
-import { DotSquareIcon, FilterIcon, FilterXIcon, HandFistIcon, MountainIcon, ScreenShareIcon } from 'lucide-react'
-import React from 'react'
+import { ChevronDownIcon, DotSquareIcon, FilterIcon, FilterXIcon, HandFistIcon, MountainIcon, ScreenShareIcon } from 'lucide-react'
+import React, { useState } from 'react'
 import ProductCard from '../../components/global/ProductCard'
-import { useGetAllProductsQuery } from '../../API/Product/productApi';
+import { useGetAllCategoriesQuery, useGetAllProductsQuery } from '../../API/Product/productApi';
 
 export default function Shop() {
-    const { data } = useGetAllProductsQuery();
-    console.log("all products:", data)
+    const [filters, setFilters] = useState({
+        category: "",
+    });
+    const { data: productData, isLoading } =
+        useGetAllProductsQuery(filters);
+
+    const { data: categoryData } =
+        useGetAllCategoriesQuery();
+
+    const products = productData?.products || [];
+    const categories = categoryData?.categories || [];
+
     return (
         <div>
             <div className='relative'>
@@ -28,30 +38,54 @@ export default function Shop() {
                             <div className='flex items-center space-x-2'>
                                 <FilterIcon size={18} />
                                 <p>filter</p>
+
+                                <div className='w-px h-5 bg-gray-300' />
+
+                                <div className='relative flex items-center'>
+                                    <select
+                                        value={filters.category}
+                                        onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value }))}
+                                        className='appearance-none border border-gray-200 rounded-lg pl-3 pr-8 py-1.5 text-sm bg-white text-gray-700 cursor-pointer min-w-36 focus:outline-none focus:ring-1 focus:ring-amber-300'
+                                    >
+                                        <option value="">All Categories</option>
+                                        {categories.map((cat) => (
+                                            <option key={cat._id} value={cat._id}>{cat.name}</option>
+                                        ))}
+                                    </select>
+                                    <ChevronDownIcon size={12} className='absolute right-2.5 pointer-events-none text-gray-400' />
+                                </div>
                             </div>
+
                             <div><DotSquareIcon size={18} /></div>
                             <div><ScreenShareIcon size={18} /></div>
                         </div>
-                        <div className='w-px h-6 bg-black'></div>
-                        <div>Showing 1-32 of 100 results</div>
+                        <div className='w-px h-5 bg-gray-300'></div>
+                        <div>Showing {products.length} of {productData?.total ?? 0} results</div>
                     </div>
 
                     <div className='flex items-center gap-2'>
                         <div className='flex items-center gap-2'>
                             <p>show</p>
-                            <div className='py-1 px-2 bg-gray-200'>00</div>
+                            <div className='appearance-none border border-gray-200 rounded-lg pl-3 pr-3 py-1.5 text-sm bg-white text-gray-700 cursor-pointer min-w-fit focus:outline-none focus:ring-1 focus:ring-amber-300'>00</div>
                         </div>
                         <div className='flex items-center gap-2'>
                             <p>sort by</p>
-                            <div className='py-1 px-4 bg-gray-200'>default</div>
+                            <div className='appearance-none border border-gray-200 rounded-lg pl-3 pr-7 py-1.5 text-sm bg-white text-gray-700 cursor-pointer min-w-fit focus:outline-none focus:ring-1 focus:ring-amber-300'>default</div>
                         </div>
                     </div>
                 </div>
 
                 <div className="py-10 px-20 grid grid-cols-4 gap-8">
-                    {data?.products?.map((p) => (
+                    {isLoading ? (
+                        <p>Loading...</p>
+                    ) : (
+                        products.map((p) => (
+                            <ProductCard key={p._id} product={p} />
+                        ))
+                    )}
+                    {/* {data?.products?.map((p) => (
                         <ProductCard key={p._id} product={p} />
-                    ))}
+                    ))} */}
                 </div>
 
                 <div className='flex items-center space-x-5 justify-center-safe'>

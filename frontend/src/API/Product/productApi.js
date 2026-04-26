@@ -22,11 +22,17 @@ export const productApi = mainApi.injectEndpoints({
         }),
 
         getAllProducts: builder.query({
-            query: () => ({
-                url: 'products',
-                method: 'GET',
-            }),
-            invalidatesTags: ['Product']
+            query: ({ category = "", tags = "" } = {}) => {
+                const params = new URLSearchParams();
+                if (category) params.append("category", category);
+                if (tags) params.append("tags", tags);
+                const queryString = params.toString();
+                return {
+                    url: queryString ? `products?${queryString}` : 'products',
+                    method: 'GET',
+                };
+            },
+            providesTags: ['Product']  
         }),
 
         getTopProducts: builder.query({
@@ -52,9 +58,20 @@ export const productApi = mainApi.injectEndpoints({
             }),
             providesTags: ['Product']
         }),
+
+
+        //cat
+        getAllCategories: builder.query({
+            query: () => ({
+                url: 'category',
+                method: 'GET',
+            }),
+            providesTags: ['Product']
+        }),
+
     }),
 
 
 })
 
-export const { useAddProductMutation, useGetAllProductsQuery, useGetTopProductsQuery, useGetRecentProductsQuery, useGetNewArrivalQuery, useGetSingleProductQuery  } = productApi;
+export const { useAddProductMutation, useGetAllProductsQuery, useGetTopProductsQuery, useGetRecentProductsQuery, useGetNewArrivalQuery, useGetSingleProductQuery, useGetAllCategoriesQuery } = productApi;

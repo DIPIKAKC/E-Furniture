@@ -26,7 +26,7 @@ export const getCategories = async (req, res) => {
 
         res.status(200).json({
             status: "success",
-            categories
+            categories: categories
         });
 
     } catch (error) {
