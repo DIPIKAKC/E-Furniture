@@ -13,6 +13,7 @@ import productRouter from './routes/productRoutes.js';
 import cartRouter from './routes/cartRoutes.js';
 import checkoutRouter from './routes/checkoutRoutes.js';
 import activityRouter from './routes/activityRoutes.js';
+import categoryRouter from './routes/categoryRoutes.js';
 
 import express from 'express'
 const app = express();
@@ -35,6 +36,7 @@ app.use('/api/products', productRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', checkoutRouter);
 app.use('/api', activityRouter);
+app.use('/api/category', categoryRouter);
 
 
 mongoose.connect(process.env.MONGO_URI).then((val) => {
