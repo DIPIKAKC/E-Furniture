@@ -1,8 +1,11 @@
 import { DotSquareIcon, FilterIcon, FilterXIcon, HandFistIcon, MountainIcon, ScreenShareIcon } from 'lucide-react'
 import React from 'react'
 import ProductCard from '../../components/global/ProductCard'
+import { useGetAllProductsQuery } from '../../API/Product/productApi';
 
 export default function Shop() {
+    const { data } = useGetAllProductsQuery();
+    console.log("all products:", data)
     return (
         <div>
             <div className='relative'>
@@ -45,8 +48,10 @@ export default function Shop() {
                     </div>
                 </div>
 
-                <div className='py-10 px-20 grid grid-cols-4 gap-8'>
-                    <ProductCard />
+                <div className="py-10 px-20 grid grid-cols-4 gap-8">
+                    {data?.products?.map((p) => (
+                        <ProductCard key={p._id} product={p} />
+                    ))}
                 </div>
 
                 <div className='flex items-center space-x-5 justify-center-safe'>

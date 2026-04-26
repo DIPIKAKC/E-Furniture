@@ -2,8 +2,18 @@ import { MinusIcon, PlusIcon, Star, StarHalfIcon } from 'lucide-react'
 import React from 'react'
 import ProductCard from '../../components/global/ProductCard'
 import CartSidebar from '../../components/global/CartSidebar'
+import { useGetAllProductsQuery, useGetSingleProductQuery } from '../../API/Product/productApi';
+import { useParams } from 'react-router-dom';
 
 export default function ProductDetail() {
+    const { id } = useParams();
+    const { isLoading, error, data } = useGetSingleProductQuery(id);
+    console.log("singleproduct data:", data);
+
+    const { data: allProducts } = useGetAllProductsQuery();
+
+    if (isLoading) return <h1 className="text-center text-white">Loading...</h1>;
+    if (error) return <h1 className="text-center text-red-500">Error loading the product</h1>;
     return (
         <div>
             <div className='bg-amber-100 py-8 px-20'>
@@ -20,7 +30,7 @@ export default function ProductDetail() {
                         <img className='size-15 object-cover' src="https://marketplacetemp0hack3.vercel.app/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F812af8yu%2Fproduction%2Fccb5458804bfb0eb4d3e074804e8ef889e96c024-1776x1176.jpg&w=750&q=75" alt="" />
                     </div>
                     <div>
-                        <img className='w-140 object-cover' src="https://marketplacetemp0hack3.vercel.app/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F812af8yu%2Fproduction%2Fccb5458804bfb0eb4d3e074804e8ef889e96c024-1776x1176.jpg&w=750&q=75" alt="" />
+                        <img className='w-140 h-90 object-cover' src={data?.singleProduct?.image} alt="" />
                     </div>
                 </div>
                 <div className='flex flex-col gap-10 px-20'>
@@ -86,9 +96,13 @@ export default function ProductDetail() {
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente dolores, excepturi vel quisquam a accusantium voluptatem incidunt ratione molestiae dolorum aut saepe, facilis nulla non unde perspiciatis labore laboriosam, provident illo itaque tempore. Commodi voluptatem numquam adipisci, amet, obcaecati facere sunt nam nihil nulla debitis quidem officiis dolorem repudiandae iure?</p>
                 </div>
                 <div className='grid grid-cols-2 gap-8'>
+                    <img className='h-80 w-full object-cover rounded-2xl' src={data?.singleProduct?.image} alt="" />
+                    <img className='h-80 w-full object-cover rounded-2xl' src={data?.singleProduct?.image} alt="" />
+                </div>
+                {/* <div className='grid grid-cols-2 gap-8'>
                     <img className='h-80 w-full object-cover rounded-2xl' src="https://images.pexels.com/photos/6580222/pexels-photo-6580222.jpeg" alt="" />
                     <img className='h-80 w-full object-cover rounded-2xl' src="https://images.pexels.com/photos/6580223/pexels-photo-6580223.jpeg" alt="" />
-                </div>
+                </div> */}
             </div>
 
             <div><hr className='text-gray-400' /></div>
@@ -98,11 +112,10 @@ export default function ProductDetail() {
                     <h2 className='font-semibold text-4xl'>Related Products</h2>
                     <p className='text-gray-400'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis expedita officia consectetur laudantium impedit perferendis!</p>
                 </div>
-                <div className='grid grid-cols-4 px-20'>
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
+                <div className='grid grid-cols-4 space-y-5 px-20'>
+                    {allProducts?.products?.map((p)=>{
+                        return <ProductCard key={p._id} product={p}/>
+                    })}
                 </div>
                 <button className='justify-center-safe underline underline-offset-5'>View More</button>
 

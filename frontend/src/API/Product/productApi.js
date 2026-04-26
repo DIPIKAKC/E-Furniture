@@ -13,6 +13,14 @@ export const productApi = mainApi.injectEndpoints({
             invalidatesTags: ['Product']
         }),
 
+        getSingleProduct: builder.query({
+            query: (id) => ({
+                url: `products/${id}`,
+                method: 'GET',
+            }),
+            providesTags: ['Product'] //It obeys 'invalidatetags' of the hook where data is expired. the hook provides task to re-fetch the data as it was expired.
+        }),
+
         getAllProducts: builder.query({
             query: () => ({
                 url: 'products',
@@ -28,7 +36,7 @@ export const productApi = mainApi.injectEndpoints({
             }),
             providesTags: ['Product']
         }),
-        
+
         getRecentProducts: builder.query({
             query: () => ({
                 url: 'products/recent',
@@ -37,9 +45,16 @@ export const productApi = mainApi.injectEndpoints({
             providesTags: ['Product']
         }),
 
+        getNewArrival: builder.query({
+            query: () => ({
+                url: 'products/newarrival',
+                method: 'GET',
+            }),
+            providesTags: ['Product']
+        }),
     }),
 
 
 })
 
-export const { useAddProductMutation, useGetAllProductsQuery } = productApi;
+export const { useAddProductMutation, useGetAllProductsQuery, useGetTopProductsQuery, useGetRecentProductsQuery, useGetNewArrivalQuery, useGetSingleProductQuery  } = productApi;
