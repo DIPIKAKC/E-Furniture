@@ -64,6 +64,7 @@ export const updateProduct = async (req, res) => {
             tags,
             sizes,
             colors,
+            rating
         } = req.body || {};
         const image = req.file?.path.replace(/\\/g, "/");
 
@@ -72,6 +73,7 @@ export const updateProduct = async (req, res) => {
             ...(price && { price }),
             ...(description && { description }),
             ...(category && { category }),
+            ...(rating && { rating }),
             ...(tags && { tags: tags }),
             ...(sizes && { sizes: sizes }),
             ...(colors && { colors: colors }),
@@ -152,7 +154,9 @@ export const getAllProducts = async (req, res) => {
 
 export const getTopProducts = async (req, res) => {
     try {
-        const products = await Product.find()
+        const products = await Product.find({
+            rating: { $gt: 0 }   // only products with rating > 0
+        })
             .sort({ rating: -1 })
             .limit(5);
 
@@ -188,6 +192,33 @@ export const getRecentProducts = async (req, res) => {
     }
 };
 
-export const getProductById = async (req, res) => {
+export const getNewArrival = async (req, res) => {
+    try {
+        const products = await Product.findOne()
+            .sort({ createdAt: -1 })
 
+        return res.status(200).json({
+            status: "success",
+            products: products
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            status: "error",
+            message: error.message
+        })
+    }
+};
+
+export const getProductById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const singleProduct = await Product.findById(id);
+        return res.status(200).json({
+            status: "success",
+            singleProduct
+        })
+    } catch (error) {
+        return res.status(500).json({ status: "error", message: error.message })
+    }
 }

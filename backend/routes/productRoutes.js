@@ -1,24 +1,26 @@
 import express from 'express'
-import { addProduct, deleteProduct, getAllProducts, getRecentProducts, getTopProducts, updateProduct } from '../controllers/productController.js';
+import { addProduct, deleteProduct, getAllProducts, getNewArrival, getProductById, getRecentProducts, getTopProducts, updateProduct } from '../controllers/productController.js';
 import { upload } from '../utils/cloudinary.js';
 
 const router = express.Router();
 
-router.route('/add-product')
+router.route('/')
+    .get(getAllProducts)
     .post(upload.single('image'), addProduct)
 
-router.route('/:id')
-    .patch(upload.single('image'), updateProduct)
-    .delete(deleteProduct)
-
-router.route('/products')
-    .get(getAllProducts)
-
-router.route('/products/top')
+router.route('/top')
     .get(getTopProducts)
 
-router.route('/products/recent')
+router.route('/recent')
     .get(getRecentProducts)
+
+router.route('/newarrival')
+    .get(getNewArrival)
+
+router.route('/:id')
+    .get(getProductById)
+    .patch(upload.single('image'), updateProduct)
+    .delete(deleteProduct)
 
 
 export default router;
