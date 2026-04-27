@@ -3,12 +3,17 @@ import React, { useState } from 'react'
 import ProductCard from '../../components/global/ProductCard'
 import CartSidebar from '../../components/global/CartSidebar'
 import { useGetAllProductsQuery, useGetSingleProductQuery } from '../../API/Product/productApi';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FaFacebook } from 'react-icons/fa';
 import { BsInstagram } from 'react-icons/bs';
 import Breadcrumb from '../../components/global/Breadcrumb';
+import { useAddToCartMutation } from '../../API/Order/orderApi';
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { openCart } from '../../API/Slice/cartSlice';
 
 export default function ProductDetail() {
+    const dispatch = useDispatch();
     const { id } = useParams();
 
     // main display image — show first image by default
@@ -27,6 +32,18 @@ export default function ProductDetail() {
 
     // Excluding the current product from related products
     const relatedProducts = allProducts?.products?.filter(p => p._id !== id) || [];
+
+    const [quantity, setQuantity] = useState(1);
+    const [addToCart, { isLoading: addingToCart }] = useAddToCartMutation();
+
+    const handleAddToCart = async () => {
+        try {
+            await addToCart({ productId: id, quantity }).unwrap();
+            dispatch(openCart()); //cart sidebar
+        } catch (err) {
+            console.error('Failed to add to cart:', err);
+        }
+    };
 
     if (isLoading) return <h1 className="text-center text-white">Loading...</h1>;
     if (error) return <h1 className="text-center text-red-500">Error loading the product</h1>;
@@ -93,13 +110,25 @@ export default function ProductDetail() {
                                 ))}
                             </div>
                         </div>
+
+                        {/* add to cart */}
                         <div className='flex items-center gap-2'>
                             <button className='flex items-center justify-evenly border-1 py-2 w-20 rounded-2xl bg-white'>
-                                <div><MinusIcon size={15} /> </div>
-                                <div>1</div>
-                                <div><PlusIcon size={15} /></div>
+                                <div onClick={() => setQuantity(prev => Math.max(1, prev - 1))}>
+                                    <MinusIcon size={15} />
+                                </div>
+                                <div>{quantity}</div>
+                                <div onClick={() => setQuantity(prev => prev + 1)}>
+                                    <PlusIcon size={15} />
+                                </div>
                             </button>
-                            <button className='px-10 py-2 border-1 rounded-2xl'> Add To Cart</button>
+                            <button
+                                onClick={handleAddToCart}
+                                disabled={addingToCart}
+                                className='px-10 py-2 border-1 rounded-2xl'
+                            >
+                                {addingToCart ? 'Adding...' : 'Add To Cart'}
+                            </button>
                         </div>
                     </div>
 
@@ -131,7 +160,7 @@ export default function ProductDetail() {
                     <img className='h-80 w-full object-cover rounded-2xl' src={product?.images?.[1]} alt="" />
                     <img className='h-80 w-full object-cover rounded-2xl' src={product?.images?.[3]} alt="" />
                 </div>
-              
+
             </div>
 
             <div><hr className='text-gray-400' /></div>

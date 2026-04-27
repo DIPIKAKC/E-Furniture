@@ -1,5 +1,6 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { createApi } from '@reduxjs/toolkit/query/react'
+// import { userSlice } from '../API/Slice/userSlice';
 
 export const base = 'http://localhost:5000';
 console.log(base);
@@ -9,7 +10,7 @@ export const mainApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: `${base}/api`,
         prepareHeaders: (headers, { getState }) => {
-            const token = getState()?.auth?.token;
+            const token = getState()?.userSlice?.token;
 
             if (token) {
                 headers.set("authorization", `Bearer ${token}`);
@@ -18,6 +19,6 @@ export const mainApi = createApi({
             return headers;
         },
     }),
-    tagTypes: ["Product"],
+    tagTypes: ["Product","Cart"],
     endpoints: () => ({})
 })

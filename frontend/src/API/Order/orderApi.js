@@ -10,8 +10,34 @@ export const orderApi = mainApi.injectEndpoints({
                 method: 'GET',
                 params: query //for search
             }),
-            providesTags: ['Checkout'] 
+            providesTags: ['Checkout']
         }),
+
+        addToCart: builder.mutation({
+            query: ({ productId, quantity }) => ({
+                url: 'cart/add',
+                method: 'POST',
+                body: { productId, quantity }
+            }),
+            invalidatesTags: ['Cart']
+        }),
+
+        getCart: builder.query({
+            query: () => ({
+                url: 'cart',
+                method: 'GET',
+            }),
+            providesTags: ['Cart']
+        }),
+
+        removeCartItem: builder.mutation({
+            query: (productId) => ({
+                url: `cart/${productId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Cart']
+        }),
+
 
         checkoutCart: builder.mutation({
             query: (data) => ({ //data=>checkout object
@@ -19,12 +45,12 @@ export const orderApi = mainApi.injectEndpoints({
                 method: 'POST',
                 body: data.body
             }),
-            invalidatesTags: ['Checkout'] 
+            invalidatesTags: ['Checkout']
         }),
 
-        
+
 
     })
 })
 
-export const { useGetBillingDetailQuery, useCheckoutCartMutation } = orderApi;
+export const { useGetBillingDetailQuery, useAddToCartMutation, useGetCartQuery, useRemoveCartItemMutation, useCheckoutCartMutation } = orderApi;

@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
+import CartSidebar from './CartSidebar'
 
 export default function RootLayOut() {
     return (
@@ -8,6 +9,7 @@ export default function RootLayOut() {
             <Header />
             <Outlet />
             <Footer />
+            <CartSidebar />
         </>
     )
 }
