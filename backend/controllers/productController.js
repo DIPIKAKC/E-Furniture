@@ -18,10 +18,10 @@ export const addProduct = async (req, res) => {
 
 
         //from multer
-        const image = req.file?.path.replace(/\\/g, "/");
-        console.log(req.file)
+        const images = req.files?.map(file=>file.path) ?? [];
+        console.log(req.files)
 
-        if (!productName || !price || !description || !category || !image) {
+        if (!productName || !price || !description || !category || !images) {
             return res.status(400).json({
                 status: "error",
                 message: "Please provide all required fields"
@@ -36,7 +36,7 @@ export const addProduct = async (req, res) => {
             tags,
             sizes,
             colors,
-            image
+            images //array of cloudinary urls
         });
 
         return res.status(201).json({
@@ -66,7 +66,7 @@ export const updateProduct = async (req, res) => {
             colors,
             rating
         } = req.body || {};
-        const image = req.file?.path.replace(/\\/g, "/");
+        const images = req.files?.map(file=>file.path) ?? [];
 
         const updateData = {
             ...(productName && { productName }),
@@ -77,7 +77,7 @@ export const updateProduct = async (req, res) => {
             ...(tags && { tags: tags }),
             ...(sizes && { sizes: sizes }),
             ...(colors && { colors: colors }),
-            ...(image && { image }),
+            ...(images && { images }),
         }
 
         const updatedProduct = await Product.findByIdAndUpdate(

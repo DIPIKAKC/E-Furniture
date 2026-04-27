@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route('/')
     .get(getAllProducts)
-    .post(upload.single('image'), addProduct)
+    .post(upload.array('images', 5), addProduct)
 
 router.route('/top')
     .get(getTopProducts)
@@ -19,7 +19,7 @@ router.route('/newarrival')
 
 router.route('/:id')
     .get(getProductById)
-    .patch(upload.single('image'), updateProduct)
+    .patch(upload.array('images', 5), updateProduct)
     .delete(deleteProduct)
 
 

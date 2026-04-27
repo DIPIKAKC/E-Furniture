@@ -36,9 +36,10 @@ const productSchema = new mongoose.Schema({
         type: String,
     }],
 
-    image: {
+    //array of images
+    images: [{
         type: String, // URL of product image
-    },
+    }],
 
     likes: [
         {
