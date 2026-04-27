@@ -1,5 +1,5 @@
 import express from "express";
-import { addToCart, emptyCart, getAllCartItems, removeCartItem } from "../controllers/cartController.js";
+import { addToCart, emptyCart, getAllCartItems, removeCartItem, updateCartItem } from "../controllers/cartController.js";
 import { protect } from "../middleware/checkUser.js";
 
 
@@ -10,6 +10,9 @@ router.route('/')
 
 router.route('/add')
     .post(protect, addToCart)
+
+router.route('/update')
+    .patch(protect, updateCartItem)
 
 router.route('/clear')
     .delete(protect, emptyCart)

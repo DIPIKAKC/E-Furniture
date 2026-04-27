@@ -1,8 +1,30 @@
 import { Delete, DeleteIcon, Minus, MountainIcon, Plus, Trash2, Trash2Icon, TrashIcon } from 'lucide-react'
 import React from 'react'
 import Breadcrumb from '../../components/global/Breadcrumb'
+import { useGetCartQuery, useRemoveCartItemMutation, useUpdateCartItemMutation } from '../../API/Order/orderApi';
+import { useNavigate } from 'react-router-dom';
 
 export default function Cart() {
+
+    const { data, isLoading } = useGetCartQuery();
+    const [removeItem] = useRemoveCartItemMutation();
+    const [updateItem] = useUpdateCartItemMutation();
+    const nav = useNavigate();
+
+    const items = data?.data?.items || [];
+
+    const subtotal = items.reduce((sum, item) => {
+        return sum + (item.product?.price ?? 0) * item.quantity;
+    }, 0);
+
+    const handleQuantityChange = async (productId, currentQty, change) => {
+        const newQty = currentQty + change;
+        console.log("productId:", productId, "newQty:", newQty);
+        if (newQty < 1) return;
+        const result = await updateItem({ productId, quantity: newQty });
+        console.log("result:", result);
+    };
+
     return (
         <div>
             <div className='relative'>
@@ -31,18 +53,70 @@ export default function Cart() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className='py-4'>
-                                    <img className='size-15 object-cover rounded-lg' src="https://marketplacetemp0hack3.vercel.app/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F812af8yu%2Fproduction%2Fccb5458804bfb0eb4d3e074804e8ef889e96c024-1776x1176.jpg&w=750&q=75" alt="" />
-                                </td>
-                                <td>Asgaard Sofa</td>
-                                <td>250,000</td>
-                                <td>1</td>
-                                <td>Rs. 250,000.00</td>
-                                <td className='justify-self-start'>
-                                    <TrashIcon className='text-orange-300' size={20} />
-                                </td>
-                            </tr>
+                            {isLoading ? (
+                                // skeleton rows
+                                [1, 2, 3].map((i) => (
+                                    <tr key={i}>
+                                        <td colSpan={6} className='py-4'>
+                                            <div className='h-16 bg-gray-100 animate-pulse rounded-lg' />
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : items.length === 0 ? (
+                                <tr>
+                                    <td colSpan={6} className='py-10 text-center text-gray-400 normal-case'>
+                                        Your cart is empty.{' '}
+                                        <span
+                                            onClick={() => nav('/shop')}
+                                            className='underline cursor-pointer text-amber-500'
+                                        >
+                                            Continue shopping
+                                        </span>
+                                    </td>
+                                </tr>
+                            ) : (
+                                items.map((item) => (
+                                    <tr key={item._id}>
+                                        <td className='py-4'>
+                                            <img
+                                                className='size-15 object-cover rounded-lg'
+                                                src={item.product?.images?.[0]}
+                                                alt=""
+                                            />
+                                        </td>
+                                        <td>{item.product?.productName}</td>
+                                        <td>Rs. {item.product?.price?.toLocaleString()}</td>
+                                        <td>
+                                            {/* Quantity controls */}
+                                            <div className='flex items-center gap-2 border border-gray-200 rounded-xl w-fit px-2 py-1'>
+                                                <button
+                                                    onClick={() => handleQuantityChange(item.product?._id, item.quantity, -1)}
+                                                    className='cursor-pointer hover:text-amber-500'
+                                                >
+                                                    <Minus size={13} />
+                                                </button>
+                                                <span className='text-gray-700 w-5 text-center normal-case'>
+                                                    {item.quantity}
+                                                </span>
+                                                <button
+                                                    onClick={() => handleQuantityChange(item.product?._id, item.quantity, 1)}
+                                                    className='cursor-pointer hover:text-amber-500'
+                                                >
+                                                    <Plus size={13} />
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>Rs. {(item.product?.price * item.quantity).toLocaleString()}</td>
+                                        <td className='justify-self-start'>
+                                            <TrashIcon
+                                                className='text-orange-300 cursor-pointer hover:text-red-400'
+                                                size={18}
+                                                onClick={() => removeItem(item.product?._id)}
+                                            />
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -55,16 +129,18 @@ export default function Cart() {
                     <div className='flex flex-col space-y-3'>
                         <div className='flex justify-evenly'>
                             <div>SubTotal</div>
-                            <div className='text-gray-400'>Rs. 250,000.00</div>
+                            <div className='text-gray-400'>Rs. {subtotal.toLocaleString()}</div>
                         </div>
                         <div className='flex justify-evenly'>
                             <div>Total</div>
-                            <div className='text-orange-300'>Rs. 250,000.00</div>
+                            <div className='text-orange-300'>Rs. {subtotal.toLocaleString()}</div>
                         </div>
                     </div>
 
                     <div className='flex justify-center'>
-                        <button className='px-10 py-3 border-1 rounded-2xl'>Check Out</button>
+                        <button onClick={() => nav('/checkout')} className='px-10 py-3 border-1 rounded-2xl'>
+                            Check Out
+                        </button>
                     </div>
                 </div>
             </div>

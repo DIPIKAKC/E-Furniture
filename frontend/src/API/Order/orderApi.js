@@ -30,6 +30,15 @@ export const orderApi = mainApi.injectEndpoints({
             providesTags: ['Cart']
         }),
 
+        updateCartItem: builder.mutation({
+            query: ({ productId, quantity }) => ({
+                url: 'cart/update',
+                method: 'PATCH',
+                body: { productId, quantity }
+            }),
+            invalidatesTags: ['Cart']
+        }),
+
         removeCartItem: builder.mutation({
             query: (productId) => ({
                 url: `cart/${productId}`,
@@ -53,4 +62,4 @@ export const orderApi = mainApi.injectEndpoints({
     })
 })
 
-export const { useGetBillingDetailQuery, useAddToCartMutation, useGetCartQuery, useRemoveCartItemMutation, useCheckoutCartMutation } = orderApi;
+export const { useGetBillingDetailQuery, useAddToCartMutation, useGetCartQuery, useUpdateCartItemMutation, useRemoveCartItemMutation, useCheckoutCartMutation } = orderApi;
