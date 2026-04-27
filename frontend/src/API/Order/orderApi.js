@@ -4,15 +4,7 @@ import { mainApi } from "../../App/mainApi";
 export const orderApi = mainApi.injectEndpoints({
     endpoints: (builder) => ({
 
-        getBillingDetail: builder.query({
-            query: (query) => ({
-                url: '/checkout',
-                method: 'GET',
-                params: query //for search
-            }),
-            providesTags: ['Checkout']
-        }),
-
+        
         addToCart: builder.mutation({
             query: ({ productId, quantity }) => ({
                 url: 'cart/add',
@@ -21,7 +13,7 @@ export const orderApi = mainApi.injectEndpoints({
             }),
             invalidatesTags: ['Cart']
         }),
-
+        
         getCart: builder.query({
             query: () => ({
                 url: 'cart',
@@ -29,7 +21,7 @@ export const orderApi = mainApi.injectEndpoints({
             }),
             providesTags: ['Cart']
         }),
-
+        
         updateCartItem: builder.mutation({
             query: ({ productId, quantity }) => ({
                 url: 'cart/update',
@@ -38,7 +30,7 @@ export const orderApi = mainApi.injectEndpoints({
             }),
             invalidatesTags: ['Cart']
         }),
-
+        
         removeCartItem: builder.mutation({
             query: (productId) => ({
                 url: `cart/${productId}`,
@@ -46,11 +38,19 @@ export const orderApi = mainApi.injectEndpoints({
             }),
             invalidatesTags: ['Cart']
         }),
-
-
+        
+        getBillingDetail: builder.query({
+            query: (query) => ({
+                url: '/order/checkout',
+                method: 'GET',
+                params: query //for search
+            }),
+            providesTags: ['Checkout']
+        }),
+        
         checkoutCart: builder.mutation({
             query: (data) => ({ //data=>checkout object
-                url: '/checkout',
+                url: '/order/checkout',
                 method: 'POST',
                 body: data.body
             }),
@@ -62,4 +62,4 @@ export const orderApi = mainApi.injectEndpoints({
     })
 })
 
-export const { useGetBillingDetailQuery, useAddToCartMutation, useGetCartQuery, useUpdateCartItemMutation, useRemoveCartItemMutation, useCheckoutCartMutation } = orderApi;
+export const { useAddToCartMutation, useGetCartQuery, useUpdateCartItemMutation, useRemoveCartItemMutation, useGetBillingDetailQuery, useCheckoutCartMutation } = orderApi;

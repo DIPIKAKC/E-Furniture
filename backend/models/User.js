@@ -32,13 +32,7 @@ const userSchema = new mongoose.Schema({
 
     phone: String,
 
-    address: [{
-        street: String,
-        city: String,
-        province: String,
-        zipCode: String,
-        country: String
-    }]
+    address: String
 
 
 }, { timestamps: true })

@@ -12,19 +12,29 @@ const orderSchema = new mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           ref: "Product",
         },
-        quantity: Number,
+        productName: String,
+        price: Number,
+        quantity: Number
       },
     ],
     totalPrice: Number,
+
+    billingDetail: {
+      address: String,
+      phone: String,
+      additionalInformation: String
+    },
+
+    paymentMethod: {
+      type: String,
+      enum: ["bank_transfer", "cash_on_delivery"],
+      default: "cash_on_delivery"
+    },
+
     isPaid: {
       type: Boolean,
       default: false,
     },
-    billingDetail: {
-      address: String,
-      phoneNumber: String,
-      additionalInformation: String
-    }
   },
   { timestamps: true }
 );

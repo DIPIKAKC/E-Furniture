@@ -7,6 +7,8 @@ export const checkout = async (req, res) => {
     try {
         const userId = req.user?.id;
 
+        const { address, phone, additionalInformation, paymentMethod } = req.body; // ✅ add this
+
         const cart = await Cart.findOne({ user: userId }).populate("items.product");
 
         if (!cart || cart.items.length === 0) {
@@ -21,13 +23,21 @@ export const checkout = async (req, res) => {
         // create order
         const order = await Order.create({
             user: userId,
-            orderItems: cart.items,
-            totalPrice,
-            billingDetail:{
+
+            //saving only id + quantity, not the whole populated object
+            orderItems: cart.items.map(item => ({
+                product: item.product._id,
+                productName: item.product.productName,
+                price: item.product.price, //one item
+                quantity: item.quantity
+            })),
+            totalPrice, //total
+            billingDetail: {
                 address,
-                phoneNumber,
+                phone,
                 additionalInformation
-            }
+            },
+            paymentMethod
         });
 
         // clear cart after checkout
@@ -51,7 +61,7 @@ export const getAllMyOrders = async (req, res) => {
     try {
         const userId = req.user?.id;
 
-        const order = await Order.findOne({ user: userId }).populate("orderItems");
+        const order = await Order.findOne({ user: userId }).populate("orderItems.product", "productName").populate("user","-password");
 
         if (!order) {
             return res.status(404).json({

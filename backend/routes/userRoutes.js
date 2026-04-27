@@ -13,7 +13,7 @@ router.route('/login')
 router.route('/user')
     .get(protect, getUser)
 
-router.route('/profile/:id')
+router.route('/profile')
     .patch(protect, updateUserProfile)
 
 export default router;

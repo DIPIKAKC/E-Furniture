@@ -100,19 +100,10 @@ export const updateUserProfile = async (req, res) => {
         const userId = req.user?.id;
         const { firstName, lastName, companyName, phone, address } = req.body || {};
         
-        const { id } = req.params;
-
         const existingUser = await User.findById(userId);
 
         if (!existingUser) {
             return res.status(404).json({ status: "error", message: "User doesn't exist" })
-        }
-
-        if (id !== userId) {
-            return res.status(403).json({
-                status: "error",
-                message: "You are not authorized to update this user",
-            });
         }
 
         existingUser.firstName = firstName ?? existingUser.firstName;
