@@ -14,6 +14,7 @@ import cartRouter from './routes/cartRoutes.js';
 import checkoutRouter from './routes/checkoutRoutes.js';
 import activityRouter from './routes/activityRoutes.js';
 import categoryRouter from './routes/categoryRoutes.js';
+import searchRouter from './routes/searchRoutes.js';
 
 import express from 'express'
 const app = express();
@@ -37,6 +38,7 @@ app.use('/api/cart', cartRouter);
 app.use('/api/order', checkoutRouter);
 app.use('/api', activityRouter);
 app.use('/api/category', categoryRouter);
+app.use('/api', searchRouter);
 
 
 mongoose.connect(process.env.MONGO_URI).then((val) => {
