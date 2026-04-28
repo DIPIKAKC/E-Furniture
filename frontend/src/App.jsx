@@ -9,6 +9,7 @@ import Authentication from "./Pages/User/Authentication";
 import Checkout from "./Pages/User/Checkout";
 import Contactus from "./Pages/User/Contactus";
 import Profile from "./Pages/User/Profile";
+import Search from "./Pages/User/Search";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: '/account',
         element: <Profile />
+      },
+      {
+        path: '/search',
+        element: <Search />
       }
     ]
 
