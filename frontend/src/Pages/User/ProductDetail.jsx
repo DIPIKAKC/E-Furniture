@@ -1,4 +1,4 @@
-import { MinusIcon, PlusIcon, Star, StarHalfIcon } from 'lucide-react'
+import { Heart, HeartIcon, MinusIcon, PlusIcon, Star, StarHalfIcon } from 'lucide-react'
 import React, { useState } from 'react'
 import ProductCard from '../../components/global/ProductCard'
 import CartSidebar from '../../components/global/CartSidebar'
@@ -9,8 +9,9 @@ import { BsInstagram } from 'react-icons/bs';
 import Breadcrumb from '../../components/global/Breadcrumb';
 import { useAddToCartMutation } from '../../API/Order/orderApi';
 import toast from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { openCart } from '../../API/Slice/cartSlice';
+import { useAddToWishlistMutation } from '../../API/Wishlist/wishlistApi';
 
 export default function ProductDetail() {
     const dispatch = useDispatch();
@@ -33,9 +34,17 @@ export default function ProductDetail() {
     // Excluding the current product from related products
     const relatedProducts = allProducts?.products?.filter(p => p._id !== id) || [];
 
+    //userid to see if the user has liked the product
+    const userId = useSelector((state) => state.userSlice.user?.id)
+    const isLiked = product?.likes?.includes(userId);
+
+    // const [liked, setLiked] = useState(false);
+    const [addToWishlist] = useAddToWishlistMutation();
+
     const [color, setColor] = useState();
     const [size, setSize] = useState();
     const [quantity, setQuantity] = useState(1);
+
     const [addToCart, { isLoading: addingToCart }] = useAddToCartMutation();
 
     const handleAddToCart = async () => {
@@ -48,6 +57,10 @@ export default function ProductDetail() {
             console.error('Failed to add to cart:', err);
         }
     };
+
+    if(!userId){
+        toast.error('Please login to perform the activity')
+    }
 
     if (isLoading) return <h1 className="text-center text-white">Loading...</h1>;
     if (error) return <h1 className="text-center text-red-500">Error loading the product</h1>;
@@ -82,7 +95,14 @@ export default function ProductDetail() {
                 </div>
                 <div className='flex flex-col gap-10 px-20'>
                     <div className='flex flex-col gap-2'>
-                        <h2 className="text-4xl font-bold">{product?.productName}</h2>
+                        <div className='flex items-center gap-2'>
+                            <h2 className="text-4xl font-bold">{product?.productName}</h2>
+                            <HeartIcon
+                                onClick={() => addToWishlist(product?._id)}
+                                className={`cursor-pointer transition 
+                            ${isLiked ? "text-pink-500 fill-pink-500" : "text-gray-500"}`}
+                            />
+                        </div>
                         <h3 className='text-xl font-semibold text-gray-400'>Rs. {product?.price?.toLocaleString()}</h3>
                         <div className='flex items-center gap-1'>
                             <Star size={20} />

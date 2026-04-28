@@ -11,6 +11,13 @@ export const toggleLike = async (req, res) => {
 
         const product = await Product.findById(productId);
 
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
+
         const liked = product.likes.includes(userId);
 
         if (liked) {
@@ -23,7 +30,8 @@ export const toggleLike = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            likesCount: product.likes.length
+            likesCount: product.likes.length,
+            liked: !liked
         })
 
     } catch (error) {
