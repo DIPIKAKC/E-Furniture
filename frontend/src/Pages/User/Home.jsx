@@ -11,35 +11,47 @@ export default function Home() {
     const { data: recentProducts } = useGetRecentProductsQuery();
     const { data: newArrival } = useGetNewArrivalQuery();
     const newProduct = newArrival?.products;
-    console.log("newProduct",newProduct)
+    console.log("newProduct", newProduct)
     return (
         <div>
 
             <div className='w-full h-screen bg-yellow-200 flex items-center justify-end gap-60'>
                 <div className='flex flex-col gap-3 ml-20'>
                     <h1 className='text-6xl font-semibold'>Rocket Single <br /> Chair</h1>
-                    <h2 onClick={()=>nav(`products/69bc51a6defc171aa6822c16`)} className='text-2xl underline'>Shop now</h2>
+                    <h2 onClick={() => nav(`products/69bc51a6defc171aa6822c16`)} className='text-2xl underline'>Shop now</h2>
                 </div>
                 <img className='h-200' src="https://next-js-template-0.vercel.app/_next/image?url=/Rocket%20single%20seater%201.png&w=1920&q=75" alt="" />
             </div>
 
             <div className='grid grid-cols-2'>
                 {recentProducts?.products?.map((p) => {
-                    return <div key={p._id} onClick={()=>nav(`products/${p._id}`)} className='relative'>
-                        <img className='h-130' src={p.image} alt="" />
-                        <div className='absolute lg:bottom-30 left-30'>
-                            <h2 className='font-semibold text-3xl'>{p.productName}</h2>
-                            <button className='underline text-md'>View more</button>
+                    return <div key={p._id} onClick={() => nav(`/products/${p._id}`)} className="relative group">
+
+                        {/* Image */}
+                        <img
+                            className="h-[420px] w-full object-cover"
+                            src={p.images?.[0]}
+                            alt=""
+                        />
+
+                        {/* Overlay */}
+                        <div className="absolute inset-0 bg-black/30"></div>
+
+                        {/* Text */}
+                        <div className="absolute bottom-10 left-10 text-white cursor-pointer">
+                            <h2 className="font-semibold text-3xl">{p.productName}</h2>
+                            <button className="underline text-md">View more</button>
                         </div>
+
                     </div>
+                    // return <div key={p._id} className='relative'>
+                    //     <img className='h-130 object-cover ' src={p.images?.[0]} alt="" />
+                    //     <div onClick={() => nav(`products/${p._id}`)} className='absolute lg:bottom-30 left-30 cursor-pointer'>
+                    //         <h2 className='font-semibold text-3xl'>{p.productName}</h2>
+                    //         <button className='underline text-md'>View more</button>
+                    //     </div>
+                    // </div>
                 })}
-                {/* <div className='relative'>
-                    <img className='h-130' src="https://marketplacetemp0hack3.vercel.app/_next/image?url=%2Ftable2.png&w=1080&q=75" alt="" />
-                    <div className='absolute lg:bottom-30 left-30'>
-                        <h2 className='font-semibold text-3xl'>Side table</h2>
-                        <button className='underline text-md'>View more</button>
-                    </div>
-                </div> */}
             </div>
 
             <div className='flex flex-col gap-15 bg-pink-50 py-10'>
@@ -59,11 +71,11 @@ export default function Home() {
             </div>
 
             <div className=' bg-yellow-200 flex items-center justify-evenly'>
-                <img className='h-100' src={newProduct?.image} alt="" />
+                <img className='h-100' src={newProduct?.images?.[0]} alt="" />
                 <div className='flex flex-col gap-8'>
                     <h2 className='font-semibold text-2xl flex justify-center'>New Arrivals</h2>
                     <h1 className='text-6xl font-semibold'>{newProduct?.productName}</h1>
-                    <button className='py-4 border-3 text-xl'>Order Now</button>
+                    <button  onClick={()=>nav(`/products/${newProduct._id}`)} className='py-4 border-3 text-xl cursor-pointer'>Order Now</button>
                 </div>
             </div>
 
@@ -74,7 +86,7 @@ export default function Home() {
                 </div>
                 <div className='px-20'>
                     <div className='flex justify-evenly'>
-                        <BlogCard image={"https://images.pexels.com/photos/9708530/pexels-photo-9708530.jpeg"}/>
+                        <BlogCard image={"https://images.pexels.com/photos/9708530/pexels-photo-9708530.jpeg"} />
                         <BlogCard image={"https://images.pexels.com/photos/36718705/pexels-photo-36718705.jpeg"} />
                         <BlogCard image={"https://images.pexels.com/photos/2962140/pexels-photo-2962140.jpeg"} />
                     </div>
