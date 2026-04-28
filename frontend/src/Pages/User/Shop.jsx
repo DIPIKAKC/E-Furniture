@@ -28,7 +28,7 @@ export default function Shop() {
                         <Breadcrumb />
                     </h2>
                 </div>
-                <img className='w-full h-70 object-cover ' src='https://images.pexels.com/photos/5379709/pexels-photo-5379709.jpeg' />
+                <img className='w-full h-50 object-cover ' src='https://images.pexels.com/photos/5379709/pexels-photo-5379709.jpeg' />
             </div>
 
 

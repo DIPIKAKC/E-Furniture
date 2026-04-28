@@ -36,7 +36,7 @@ export default function Cart() {
                         <Breadcrumb />
                     </h2>
                 </div>
-                <img className='w-full h-70 object-cover ' src='https://images.pexels.com/photos/5379709/pexels-photo-5379709.jpeg' />
+                <img className='w-full h-50 object-cover ' src='https://images.pexels.com/photos/5379709/pexels-photo-5379709.jpeg' />
             </div>
 
             <div className='flex justify-between gap-10 px-20 py-10'>

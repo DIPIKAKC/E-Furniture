@@ -2,6 +2,7 @@ import React from 'react'
 import Login from '../../components/auth/Login'
 import Signup from '../../components/auth/Signup'
 import { MountainIcon } from 'lucide-react'
+import Breadcrumb from '../../components/global/Breadcrumb'
 
 export default function Authentication() {
     return (
@@ -12,10 +13,10 @@ export default function Authentication() {
                     <MountainIcon size={40} className='text-gray-400' />
                     <h1 className='font-bold text-2xl text-gray-400'>Shop</h1>
                     <h2>
-                        breadcrumbs home--shop
+                        <Breadcrumb />
                     </h2>
                 </div>
-                <img className='w-full h-70 object-cover ' src='https://images.pexels.com/photos/5379709/pexels-photo-5379709.jpeg' />
+                <img className='w-full h-50 object-cover ' src='https://images.pexels.com/photos/5379709/pexels-photo-5379709.jpeg' />
             </div>
 
 

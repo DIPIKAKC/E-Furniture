@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom'
 import Search from '../../Pages/User/Search';
+import DropdownProfile from './DropdownProfile';
 
 export default function Header() {
     const { user } = useSelector((state) => state.userSlice ?? {}); //userslice ko matra initial state taneko
     const nav = useNavigate();
     const [query, setQuery] = useState("");
     const [searchOpen, setSearchOpen] = useState(false);
+    const [profileOpen, setProfileOpen] = useState(false);
 
     const handleUserClick = (e) => {
         e.preventDefault();
@@ -36,8 +38,17 @@ export default function Header() {
                 <NavLink to={'/contactus'}>Contact</NavLink>
             </div>
             <div className='flex items-center space-x-6'>
-                <div onClick={handleUserClick} className='cursor-pointer'>
-                    <User2Icon size={20} />
+
+                <div className="relative">
+                    <User2Icon
+                        size={20}
+                        className="cursor-pointer"
+                        onClick={() => setProfileOpen(prev => !prev)}
+                    />
+
+                    {profileOpen && (
+                        <DropdownProfile user={user} close={() => setProfileOpen(false)} />
+                    )}
                 </div>
 
                 <div className="relative flex items-center">
@@ -69,6 +80,7 @@ export default function Header() {
                 <NavLink to={'/cart'}>
                     <ShoppingCartIcon size={20} />
                 </NavLink>
+
             </div>
         </header>
     )

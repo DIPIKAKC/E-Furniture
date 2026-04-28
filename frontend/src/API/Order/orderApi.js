@@ -56,10 +56,17 @@ export const orderApi = mainApi.injectEndpoints({
             }),
             invalidatesTags: ['Cart']
         }),
-
-
+        
+        getMyOrders: builder.query({
+            query: () => ({
+                url: '/order',
+                method: 'GET',
+            }),
+            providesTags: ['Cart']
+        }),
+        
 
     })
 })
 
-export const { useAddToCartMutation, useGetCartQuery, useUpdateCartItemMutation, useRemoveCartItemMutation, useGetBillingDetailQuery, useCheckoutCartMutation } = orderApi;
+export const { useAddToCartMutation, useGetCartQuery, useUpdateCartItemMutation, useRemoveCartItemMutation, useGetBillingDetailQuery, useCheckoutCartMutation, useGetMyOrdersQuery } = orderApi;

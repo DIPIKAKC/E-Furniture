@@ -64,9 +64,11 @@ export const getAllMyOrders = async (req, res) => {
     try {
         const userId = req.user?.id;
 
-        const order = await Order.findOne({ user: userId }).populate("orderItems.product", "productName").populate("user", "-password");
+        const orders = await Order.find({ user: userId })
+            .populate("orderItems.product", "productName")
+            .populate("user", "-password");
 
-        if (!order) {
+        if (!orders) {
             return res.status(404).json({
                 success: false,
                 message: "Order not found",
@@ -76,7 +78,7 @@ export const getAllMyOrders = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Your Orders",
-            data: order,
+            data: orders,
         });
 
     } catch (error) {
