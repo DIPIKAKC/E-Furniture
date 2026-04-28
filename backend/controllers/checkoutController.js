@@ -10,6 +10,7 @@ export const checkout = async (req, res) => {
         const { address, phone, additionalInformation, paymentMethod } = req.body; // ✅ add this
 
         const cart = await Cart.findOne({ user: userId }).populate("items.product");
+        console.log("CART ITEMS AT CHECKOUT:", JSON.stringify(cart.items, null, 2)); // ← do size/color exist here?
 
         if (!cart || cart.items.length === 0) {
             return res.status(400).json({ message: "Cart is empty" });
@@ -29,7 +30,9 @@ export const checkout = async (req, res) => {
                 product: item.product._id,
                 productName: item.product.productName,
                 price: item.product.price, //one item
-                quantity: item.quantity
+                quantity: item.quantity,
+                size: item.size,
+                color: item.color
             })),
             totalPrice, //total
             billingDetail: {
@@ -61,7 +64,7 @@ export const getAllMyOrders = async (req, res) => {
     try {
         const userId = req.user?.id;
 
-        const order = await Order.findOne({ user: userId }).populate("orderItems.product", "productName").populate("user","-password");
+        const order = await Order.findOne({ user: userId }).populate("orderItems.product", "productName").populate("user", "-password");
 
         if (!order) {
             return res.status(404).json({

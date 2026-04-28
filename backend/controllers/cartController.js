@@ -3,8 +3,11 @@ import Product from "../models/Product.js";
 
 export const addToCart = async (req, res) => {
     try {
-        const { productId, quantity } = req.body;
+        const { productId, quantity, size, color } = req.body;
         const userId = req.user?.id; //authentication -> the id of currently logged in user
+
+        console.log("REQ BODY:", req.body);          // ← check if size/color arrive
+        console.log("size:", size, "color:", color);
 
         // validation
         if (!productId || !quantity || quantity < 1) {
@@ -25,7 +28,7 @@ export const addToCart = async (req, res) => {
         if (!cart) {
             cart = await Cart.create({
                 user: userId,
-                items: [{ product: productId, quantity }],
+                items: [{ product: productId, quantity, size, color }],
             });
         } else {
 
@@ -40,10 +43,14 @@ export const addToCart = async (req, res) => {
                     1,
                     cart.items[itemIndex].quantity + quantity
                 );
-            } else {
-                //if different push the new item to cart
-                cart.items.push({ product: productId, quantity });
+                cart.items[itemIndex].size = size;
+                cart.items[itemIndex].color = color;
             }
+            else {
+                //if different push the new item to cart
+                cart.items.push({ product: productId, quantity, size, color });
+            }
+            console.log("CART ITEMS BEFORE SAVE:", JSON.stringify(cart.items, null, 2));
 
             //saving info
             await cart.save();
@@ -51,6 +58,8 @@ export const addToCart = async (req, res) => {
 
         //populating product info
         await cart.populate("items.product");
+        console.log("CART ITEMS AFTER SAVE:", JSON.stringify(cart.items, null, 2));
+
 
         res.status(200).json({
             success: true,

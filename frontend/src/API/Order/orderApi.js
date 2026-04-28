@@ -6,10 +6,10 @@ export const orderApi = mainApi.injectEndpoints({
 
         
         addToCart: builder.mutation({
-            query: ({ productId, quantity }) => ({
+            query: (data) => ({
                 url: 'cart/add',
                 method: 'POST',
-                body: { productId, quantity }
+                body: data
             }),
             invalidatesTags: ['Cart']
         }),
@@ -45,7 +45,7 @@ export const orderApi = mainApi.injectEndpoints({
                 method: 'GET',
                 params: query //for search
             }),
-            providesTags: ['Checkout']
+            providesTags: ['Cart']
         }),
         
         checkoutCart: builder.mutation({
@@ -54,7 +54,7 @@ export const orderApi = mainApi.injectEndpoints({
                 method: 'POST',
                 body: data.body
             }),
-            invalidatesTags: ['Checkout']
+            invalidatesTags: ['Cart']
         }),
 
 

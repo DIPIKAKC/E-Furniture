@@ -10,6 +10,7 @@ import Checkout from "./Pages/User/Checkout";
 import Contactus from "./Pages/User/Contactus";
 import Profile from "./Pages/User/Profile";
 import Search from "./Pages/User/Search";
+import Wishlist from "./Pages/User/Wishlist";
 
 const router = createBrowserRouter([
   {
@@ -55,12 +56,17 @@ const router = createBrowserRouter([
       {
         path: '/search',
         element: <Search />
+      },
+      {
+        path: '/wishlist',
+        element: <Wishlist />
       }
     ]
 
   }
 
 ]);
+
 
 export default function App() {
   return <RouterProvider router={router} />

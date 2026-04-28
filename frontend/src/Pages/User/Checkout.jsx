@@ -15,7 +15,7 @@ export default function Checkout() {
     const [checkoutCart, { isLoading: checkingOut }] = useCheckoutCartMutation();
 
     const profile = billingData?.data;
-    console.log("profileinfo:",profile)
+    console.log("profileinfo:", profile)
     const items = cartData?.data?.items || [];
 
     const subtotal = items.reduce((sum, item) => {
@@ -23,7 +23,7 @@ export default function Checkout() {
     }, 0);
 
     const [address, setAddress] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
+    const [phone, setPhone] = useState("");
     const [additionalInformation, setAdditionalInformation] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("bank_transfer");
 
@@ -32,23 +32,24 @@ export default function Checkout() {
     useEffect(() => {
         if (profile) {
             setAddress(profile.address ?? "");
-            setPhoneNumber(profile.phone ?? "");
+            setPhone(profile.phone ?? "");
         }
     }, [profile]);
 
 
     const handlePlaceOrder = async () => {
         try {
-            const result = await checkoutCart({
+            const res = await checkoutCart({
                 body: {
                     address,
-                    phoneNumber,
+                    phone,
                     additionalInformation,
                     paymentMethod
                 }
             }).unwrap();
 
             toast.success("Order placed successfully");
+            console.log("checkout", res)
             nav('/');
         } catch (err) {
             console.error("Checkout failed:", err.message);
@@ -106,8 +107,8 @@ export default function Checkout() {
                     {/* phone-editable */}
                     <input
                         className="border p-3 rounded w-full mt-4 focus:outline-none focus:ring-1 focus:ring-amber-300"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                         placeholder="Phone"
                     />
 

@@ -5,11 +5,12 @@ import { addReview, deleteReview, getMyLikedProducts, getProductReviews, toggleL
 const router = express.Router();
 
 //like
+router.route("/liked")
+    .get(protect, getMyLikedProducts)
+
 router.route("/like/:productId")
     .post(protect, toggleLike);
 
-router.route("/like")
-    .get(protect, getMyLikedProducts)
 
 //reviews
 //add, get

@@ -44,7 +44,7 @@ export const getMyLikedProducts = async (req, res) => {
 
         //find never returns null, it returns []. so "length" instead of '!likedProducts'
         if (likedProducts.length === 0) {
-            res.status(400).json({
+            return res.status(404).json({
                 status: "error",
                 message: "You have no liked products."
             });

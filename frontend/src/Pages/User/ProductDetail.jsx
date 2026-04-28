@@ -33,12 +33,16 @@ export default function ProductDetail() {
     // Excluding the current product from related products
     const relatedProducts = allProducts?.products?.filter(p => p._id !== id) || [];
 
+    const [color, setColor] = useState();
+    const [size, setSize] = useState();
     const [quantity, setQuantity] = useState(1);
     const [addToCart, { isLoading: addingToCart }] = useAddToCartMutation();
 
     const handleAddToCart = async () => {
         try {
-            await addToCart({ productId: id, quantity }).unwrap();
+            if (!size) return toast.error("Please select a size");
+            if (!color) return toast.error("Please select a color");
+            await addToCart({ productId: id, quantity, size, color }).unwrap();
             dispatch(openCart()); //cart sidebar
         } catch (err) {
             console.error('Failed to add to cart:', err);
@@ -64,7 +68,7 @@ export default function ProductDetail() {
                                 className={`size-15 object-cover cursor-pointer border-2 ${selectedImage === index ? 'border-amber-400' : 'border-transparent'
                                     }`}
                                 src={img}
-                                onClick={() => setSelectedImage()}
+                                onClick={() => setSelectedImage(index)}
                             />
                         ))}
                     </div>
@@ -91,9 +95,14 @@ export default function ProductDetail() {
                         <div className='flex flex-col gap-1'>
                             <h5 className=' text-lg text-gray-400'>Size</h5>
                             <div className='flex items-center gap-2'>
-                                {product?.sizes?.map(size => (
-                                    <div key={size} className='py-1 px-3 border w-fit rounded-lg text-sm cursor-pointer hover:bg-amber-100'>
-                                        {size}
+                                {product?.sizes?.map(s => (
+                                    <div
+                                        key={s}
+                                        onClick={() => setSize(s)}
+                                        className={`py-1 px-3 border w-fit rounded-lg text-sm cursor-pointer 
+                                  ${size === s ? 'bg-amber-100 border-amber-400' : 'hover:bg-amber-100'}`}
+                                    >
+                                        {s}
                                     </div>
                                 ))}
                             </div>
@@ -101,11 +110,13 @@ export default function ProductDetail() {
                         <div className='flex flex-col gap-1'>
                             <h5 className=' text-lg text-gray-400'>Color</h5>
                             <div className='flex items-center gap-2'>
-                                {product?.colors?.map(color => (
+                                {product?.colors?.map(c => (
                                     <div
-                                        key={color}
-                                        className='size-6 rounded-full border-2 border-gray-300 hover:border-gray-400 cursor-pointer'
-                                        style={{ backgroundColor: color }}   // works if colors are stored as hex/css values
+                                        key={c}
+                                        onClick={() => setColor(c)}
+                                        className={`size-6 rounded-full cursor-pointer border-2 
+                                     ${color === c ? 'border-amber-400 scale-110' : 'border-gray-300 hover:border-gray-400'}`}
+                                        style={{ backgroundColor: c }}  // works if color are stored as hex/css values
                                     />
                                 ))}
                             </div>
