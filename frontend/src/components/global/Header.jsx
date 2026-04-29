@@ -43,11 +43,20 @@ export default function Header() {
                     <User2Icon
                         size={20}
                         className="cursor-pointer"
-                        onClick={() => setProfileOpen(prev => !prev)}
+                        onClick={() => {
+                            if (!user) {
+                                nav('/authentication'); 
+                            } else {
+                                setProfileOpen(prev => !prev); 
+                            }
+                        }}
                     />
 
-                    {profileOpen && (
-                        <DropdownProfile user={user} close={() => setProfileOpen(false)} />
+                    {user && profileOpen && (
+                        <DropdownProfile
+                            user={user}
+                            close={() => setProfileOpen(false)}
+                        />
                     )}
                 </div>
 

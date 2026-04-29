@@ -41,16 +41,21 @@ export default function ProductDetail() {
     // const [liked, setLiked] = useState(false);
     const [addToWishlist] = useAddToWishlistMutation();
 
+
     const [color, setColor] = useState();
     const [size, setSize] = useState();
     const [quantity, setQuantity] = useState(1);
+
 
     const [addToCart, { isLoading: addingToCart }] = useAddToCartMutation();
 
     const handleAddToCart = async () => {
         try {
-            if (!size) return toast.error("Please select a size");
-            if (!color) return toast.error("Please select a color");
+            if (!userId) {
+                toast.error('Please login to perform the activity')
+            }
+            if (userId && !size) return toast.error("Please select a size");
+            if (userId && !color) return toast.error("Please select a color");
             await addToCart({ productId: id, quantity, size, color }).unwrap();
             dispatch(openCart()); //cart sidebar
         } catch (err) {
@@ -58,8 +63,17 @@ export default function ProductDetail() {
         }
     };
 
-    if(!userId){
-        toast.error('Please login to perform the activity')
+
+    const handleLike = async () => {
+        try {
+            if (!userId) {
+                toast.error('Please login to perform the activity')
+            }
+            addToWishlist(product?._id)
+        } catch (error) {
+            console.error('Failed to Like the product:', err.message);
+
+        }
     }
 
     if (isLoading) return <h1 className="text-center text-white">Loading...</h1>;
@@ -98,7 +112,7 @@ export default function ProductDetail() {
                         <div className='flex items-center gap-2'>
                             <h2 className="text-4xl font-bold">{product?.productName}</h2>
                             <HeartIcon
-                                onClick={() => addToWishlist(product?._id)}
+                                onClick={() => handleLike()}
                                 className={`cursor-pointer transition 
                             ${isLiked ? "text-pink-500 fill-pink-500" : "text-gray-500"}`}
                             />

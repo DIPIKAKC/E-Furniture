@@ -2,6 +2,7 @@ import { LogOutIcon, User2Icon } from 'lucide-react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { removeUser } from '../../API/Slice/userSlice';
+import toast from 'react-hot-toast';
 
 export default function DropdownProfile({ user, close }) {
     const nav = useNavigate();
@@ -9,8 +10,7 @@ export default function DropdownProfile({ user, close }) {
 
     const handleAccount = () => {
         close();
-        if (user) nav('/account');
-        else nav('/authentication');
+        nav('/account');
     };
 
     const handleLogout = () => {
