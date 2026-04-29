@@ -76,7 +76,7 @@ export const loginAdmin = async (req, res) => {
         return res.status(200).json({
             status: 'success',
             data: {
-                admin: {
+                user: {
                     id: account.id,
                     email: account.email,
                 },

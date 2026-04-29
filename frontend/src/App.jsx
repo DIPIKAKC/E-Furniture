@@ -11,14 +11,17 @@ import Contactus from "./Pages/User/Contactus";
 import Profile from "./Pages/User/Profile";
 import Search from "./Pages/User/Search";
 import Wishlist from "./Pages/User/Wishlist";
+import AdminLogin from "./Pages/Admin/auth/AdminLogin";
+import Dashboard from "./Pages/Admin/Dashboard";
+import AdminLayout from "./components/admin/AdminLayout";
+import Products from "./Pages/Admin/CRUD/Products";
 
 const router = createBrowserRouter([
   {
-    path: '/',
     element: <RootLayOut />,
     children: [
       {
-        index: true,
+        path: '/',
         element: <Home />
       },
       {
@@ -29,10 +32,6 @@ const router = createBrowserRouter([
         path: '/products/:id',
         element: <ProductDetail />
       },
-      // {
-      //   path: '/cartside',
-      //   element: <CartSidebar />
-      // },
       {
         path: '/cart',
         element: <Cart />
@@ -61,11 +60,32 @@ const router = createBrowserRouter([
         path: '/wishlist',
         element: <Wishlist />
       }
+
     ]
+  },
 
-  }
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "login",
+        element: <AdminLogin />
+      },
+      {
+        path: "dashboard",
+        element: <Dashboard />
+      },
+      {
+        path: "products",
+        element: <Products />
+      },
+    ],
+  },
 
-]);
+]
+
+);
 
 
 export default function App() {
