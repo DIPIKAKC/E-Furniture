@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 
 import userRouter from './routes/userRoutes.js';
+import adminRouter from './routes/adminRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import cartRouter from './routes/cartRoutes.js';
 import checkoutRouter from './routes/checkoutRoutes.js';
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 
 
 app.use('/api', userRouter);
+app.use('/api/admin', adminRouter);
 app.use('/api/products', productRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', checkoutRouter);
