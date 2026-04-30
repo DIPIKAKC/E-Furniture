@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import AddProduct from './CRUD/AddProduct';
 import { useGetAllProductsQuery } from '../../API/Product/productApi';
+import AddCategory from './CRUD/AddCategory';
 
 export default function Products() {
 
   const { data, isLoading } = useGetAllProductsQuery();
   const nav = useNavigate();
   const [showAddProduct, setShowAddProduct] = useState(false);
+  const [showAddCategory, setShowAddCategory] = useState(false);
 
 
   const products = data?.products || [];
@@ -17,10 +19,16 @@ export default function Products() {
   return (
     <div>
 
-      <button onClick={() => setShowAddProduct(true)} className='flex items-center gap-2 mt-10 ml-20 py-2 px-5 bg-orange-100 text-gray-400 text-sm font-bold rounded-lg'>
-        <PlusCircleIcon size={18} />
-        Add Product
-      </button>
+      <div className='flex items-center gap-4'>
+        <button onClick={() => setShowAddProduct(true)} className='flex items-center gap-2 mt-10 ml-20 py-2 px-5 bg-orange-100 text-gray-400 text-sm font-bold rounded-lg'>
+          <PlusCircleIcon size={18} />
+          Add Product
+        </button>
+        <button onClick={() => setShowAddCategory(true)} className='flex items-center gap-2 mt-10 py-2 px-5 bg-orange-100 text-gray-400 text-sm font-bold rounded-lg'>
+          <PlusCircleIcon size={18} />
+          Add Category
+        </button>
+      </div>
 
       <div className='flex justify-between gap-10 px-20 py-10'>
         <div className='w-full'>
@@ -91,9 +99,13 @@ export default function Products() {
       </div>
 
 
-      {/* for modal */}
+      {/* for add product modal */}
       {showAddProduct && (
         <AddProduct onClose={() => setShowAddProduct(false)} />
+      )}
+      {/* for add category modal */}
+      {showAddCategory && (
+        <AddCategory onClose={() => setShowAddCategory(false)} />
       )}
 
     </div>

@@ -32,7 +32,7 @@ export const productApi = mainApi.injectEndpoints({
                     method: 'GET',
                 };
             },
-            providesTags: ['Product']  
+            providesTags: ['Product']
         }),
 
         getTopProducts: builder.query({
@@ -61,6 +61,15 @@ export const productApi = mainApi.injectEndpoints({
 
 
         //cat
+        addCategory: builder.mutation({
+            query: (body) => ({
+                url: 'category',
+                method: 'POST',
+                body: body
+            }),
+            invalidatesTags: ['Product']
+        }),
+
         getAllCategories: builder.query({
             query: () => ({
                 url: 'category',
@@ -74,4 +83,4 @@ export const productApi = mainApi.injectEndpoints({
 
 })
 
-export const { useAddProductMutation, useGetAllProductsQuery, useGetTopProductsQuery, useGetRecentProductsQuery, useGetNewArrivalQuery, useGetSingleProductQuery, useGetAllCategoriesQuery } = productApi;
+export const { useAddProductMutation, useGetAllProductsQuery, useGetTopProductsQuery, useGetRecentProductsQuery, useGetNewArrivalQuery, useGetSingleProductQuery, useAddCategoryMutation, useGetAllCategoriesQuery } = productApi;
