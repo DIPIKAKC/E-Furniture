@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import AddProduct from './CRUD/AddProduct';
 import { useGetAllProductsQuery } from '../../API/Product/productApi';
 import AddCategory from './CRUD/AddCategory';
+import EditProduct from './CRUD/EditProduct';
+import DeleteProduct from './CRUD/DeleteProduct';
 
 export default function Products() {
 
@@ -11,6 +13,9 @@ export default function Products() {
   const nav = useNavigate();
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [showAddCategory, setShowAddCategory] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showEditProduct, setShowEditProduct] = useState(false);
+  const [showDeleteProduct, setShowDeleteProduct] = useState(false);
 
 
   const products = data?.products || [];
@@ -78,13 +83,20 @@ export default function Products() {
                     <td>
                       <div className="flex items-center gap-4">
                         <Edit2Icon
-                          className='text-orange-300 cursor-pointer hover:text-blue-400'
+                          className='text-gray-300 cursor-pointer hover:text-blue-400'
                           size={18}
+                          onClick={() => {
+                            setSelectedProduct(item);
+                            setShowEditProduct(true);
+                          }}
                         />
                         <TrashIcon
                           className='text-orange-300 cursor-pointer hover:text-red-400'
                           size={18}
-                          onClick={() => removeItem(item?._id)}
+                          onClick={() => {
+                            setSelectedProduct(item);
+                            setShowDeleteProduct(true);
+                          }}
                         />
                       </div>
                     </td>
@@ -106,6 +118,23 @@ export default function Products() {
       {/* for add category modal */}
       {showAddCategory && (
         <AddCategory onClose={() => setShowAddCategory(false)} />
+      )}
+      {/* for edit product modal */}
+      {showEditProduct && selectedProduct && (
+        <EditProduct
+          product={selectedProduct}
+          onClose={() => setShowEditProduct(false)}
+        />
+      )}
+      {/* for delete product modal */}
+      {showDeleteProduct && selectedProduct && (
+        <DeleteProduct
+          product={selectedProduct}
+          onClose={() => {
+            setShowDeleteProduct(false);
+            setSelectedProduct(null); 
+          }}
+        />
       )}
 
     </div>

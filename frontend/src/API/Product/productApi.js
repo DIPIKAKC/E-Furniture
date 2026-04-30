@@ -12,6 +12,23 @@ export const productApi = mainApi.injectEndpoints({
             }),
             invalidatesTags: ['Product']
         }),
+        
+        updateProduct: builder.mutation({
+            query: ({id,formData}) => ({
+                url: `products/${id}`,
+                method: 'PATCH',
+                body: formData
+            }),
+            invalidatesTags: ['Product']
+        }),
+        
+        deleteProduct: builder.mutation({
+            query: (id) => ({
+                url: `products/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Product']
+        }),
 
         getSingleProduct: builder.query({
             query: (id) => ({
@@ -83,4 +100,4 @@ export const productApi = mainApi.injectEndpoints({
 
 })
 
-export const { useAddProductMutation, useGetAllProductsQuery, useGetTopProductsQuery, useGetRecentProductsQuery, useGetNewArrivalQuery, useGetSingleProductQuery, useAddCategoryMutation, useGetAllCategoriesQuery } = productApi;
+export const { useAddProductMutation, useUpdateProductMutation, useDeleteProductMutation, useGetAllProductsQuery, useGetTopProductsQuery, useGetRecentProductsQuery, useGetNewArrivalQuery, useGetSingleProductQuery, useAddCategoryMutation, useGetAllCategoriesQuery } = productApi;
