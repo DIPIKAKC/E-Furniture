@@ -1,7 +1,11 @@
+import mongoose from 'mongoose';
 import Product from '../models/Product.js';
 
 export const addProduct = async (req, res) => {
     try {
+        console.log("BODY:", req.body);
+        console.log("FILES:", req.files);
+
         let {
             productName,
             price,
@@ -12,21 +16,46 @@ export const addProduct = async (req, res) => {
             colors,
         } = req.body || {};
 
-        if (sizes) sizes = JSON.parse(sizes);
-        if (colors) colors = JSON.parse(colors);
-        if (tags) tags = JSON.parse(tags);
+
+        const safeParse = (val) => {
+            try {
+                return val ? JSON.parse(val) : [];
+            } catch {
+                return [];
+            }
+        };
+
+        sizes = safeParse(sizes);
+        colors = safeParse(colors);
+        tags = safeParse(tags);
 
 
         //from multer
-        const images = req.files?.map(file=>file.path) ?? [];
-        console.log(req.files)
+        const images =
+            req.files?.map(file => file.path) || [];
 
-        if (!productName || !price || !description || !category || !images) {
+
+        if (!productName || !price || !description || !category) {
             return res.status(400).json({
                 status: "error",
                 message: "Please provide all required fields"
             });
         }
+
+        if (!mongoose.Types.ObjectId.isValid(category)) {
+            return res.status(400).json({
+                status: "error",
+                message: "Invalid category"
+            });
+        }
+
+        if (!images.length) {
+            return res.status(400).json({
+                status: "error",
+                message: "Please provide all required fields"
+            });
+        }
+
 
         const newProduct = await Product.create({
             productName,
@@ -46,6 +75,7 @@ export const addProduct = async (req, res) => {
         });
 
     } catch (error) {
+        console.log("🔥 BACKEND ERROR:", error);
         res.status(500).json({
             status: 'error',
             message: error.message
@@ -66,7 +96,7 @@ export const updateProduct = async (req, res) => {
             colors,
             rating
         } = req.body || {};
-        const images = req.files?.map(file=>file.path) ?? [];
+        const images = req.files?.map(file => file.path) ?? [];
 
         const updateData = {
             ...(productName && { productName }),
@@ -156,7 +186,7 @@ export const getAllProducts = async (req, res) => {
         return res.status(200).json({
             status: "success",
             products: products,
-            total:total
+            total: total
         })
 
     } catch (error) {

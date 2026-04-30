@@ -14,7 +14,7 @@ import Wishlist from "./Pages/User/Wishlist";
 import AdminLogin from "./Pages/Admin/auth/AdminLogin";
 import Dashboard from "./Pages/Admin/Dashboard";
 import AdminLayout from "./components/admin/AdminLayout";
-import Products from "./Pages/Admin/CRUD/Products";
+import Products from "./Pages/Admin/Products";
 
 const router = createBrowserRouter([
   {

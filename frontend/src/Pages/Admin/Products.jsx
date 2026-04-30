@@ -1,18 +1,26 @@
-import { Delete, DeleteIcon, Edit2Icon, Minus, MountainIcon, Plus, Trash2, Trash2Icon, TrashIcon } from 'lucide-react'
-import React from 'react'
+import { Delete, DeleteIcon, Edit2Icon, Minus, MountainIcon, Plus, PlusCircleIcon, Trash2, Trash2Icon, TrashIcon } from 'lucide-react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useGetAllProductsQuery } from '../../../API/Product/productApi';
+import AddProduct from './CRUD/AddProduct';
+import { useGetAllProductsQuery } from '../../API/Product/productApi';
 
 export default function Products() {
 
   const { data, isLoading } = useGetAllProductsQuery();
   const nav = useNavigate();
+  const [showAddProduct, setShowAddProduct] = useState(false);
+
 
   const products = data?.products || [];
   console.log("all prod", products)
 
   return (
     <div>
+
+      <button onClick={() => setShowAddProduct(true)} className='flex items-center gap-2 mt-10 ml-20 py-2 px-5 bg-orange-100 text-gray-400 text-sm font-bold rounded-lg'>
+        <PlusCircleIcon size={18} />
+        Add Product
+      </button>
 
       <div className='flex justify-between gap-10 px-20 py-10'>
         <div className='w-full'>
@@ -81,6 +89,12 @@ export default function Products() {
 
 
       </div>
+
+
+      {/* for modal */}
+      {showAddProduct && (
+        <AddProduct onClose={() => setShowAddProduct(false)} />
+      )}
 
     </div>
   )

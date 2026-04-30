@@ -6,7 +6,7 @@ export const productApi = mainApi.injectEndpoints({
 
         addProduct: builder.mutation({
             query: (formdata) => ({
-                url: 'add-product',
+                url: 'products',
                 method: 'POST',
                 body: formdata
             }),
