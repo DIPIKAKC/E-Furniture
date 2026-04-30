@@ -17,8 +17,8 @@ export default function Home() {
 
             <div className='w-full h-screen bg-yellow-200 flex items-center justify-end gap-60'>
                 <div className='flex flex-col gap-3 ml-20'>
-                    <h1 className='text-6xl font-semibold'>Rocket Single <br /> Chair</h1>
-                    <h2 onClick={() => nav(`products/69bc51a6defc171aa6822c16`)} className='text-2xl underline'>Shop now</h2>
+                    <h1 className='text-6xl font-semibold cursor-pointer'>Rocket Single <br /> Chair</h1>
+                    <h2 onClick={() => nav(`products/69f387b24318768f0a1538e1`)} className='text-2xl underline cursor-pointer'>Shop now</h2>
                 </div>
                 <img className='h-200' src="https://next-js-template-0.vercel.app/_next/image?url=/Rocket%20single%20seater%201.png&w=1920&q=75" alt="" />
             </div>

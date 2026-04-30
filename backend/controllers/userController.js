@@ -63,6 +63,12 @@ export const loginUser = async (req, res) => {
             data: "User doesnot exist"
         })
 
+        if (account.role !== "user") {
+            return res.status(403).json({
+                message: "Not an user account"
+            });
+        }
+
         const isMatch = await bcrypt.compare(password, account.password);
         if (!isMatch) return res.status(400).json({
             status: 'error',
@@ -70,7 +76,11 @@ export const loginUser = async (req, res) => {
         });
 
         const token = jwt.sign(
-            { id: account.id, },
+            {
+                id: account.id,
+                email: account.email,
+                role: account.role
+            },
             process.env.JWT_SECRET_KEY,
             { expiresIn: "7d" }
         );
@@ -99,7 +109,7 @@ export const updateUserProfile = async (req, res) => {
 
         const userId = req.user?.id;
         const { firstName, lastName, companyName, phone, address } = req.body || {};
-        
+
         const existingUser = await User.findById(userId);
 
         if (!existingUser) {

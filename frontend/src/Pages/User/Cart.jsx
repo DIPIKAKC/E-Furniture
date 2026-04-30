@@ -1,10 +1,13 @@
 import { Delete, DeleteIcon, Minus, MountainIcon, Plus, Trash2, Trash2Icon, TrashIcon } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import Breadcrumb from '../../components/global/Breadcrumb'
 import { useGetCartQuery, useRemoveCartItemMutation, useUpdateCartItemMutation } from '../../API/Order/orderApi';
 import { useNavigate } from 'react-router-dom';
 
 export default function Cart() {
+
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
 
     const { data, isLoading } = useGetCartQuery();
     const [removeItem] = useRemoveCartItemMutation();
@@ -111,7 +114,10 @@ export default function Cart() {
                                             <TrashIcon
                                                 className='text-orange-300 cursor-pointer hover:text-red-400'
                                                 size={18}
-                                                onClick={() => removeItem(item.product?._id)}
+                                                onClick={() => {
+                                                    setSelectedItem(item);
+                                                    setShowConfirm(true);
+                                                }}
                                             />
                                         </td>
                                     </tr>
@@ -160,6 +166,42 @@ export default function Cart() {
                 </div>
             </div>
 
+            {showConfirm && selectedItem && (
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                    <div className="bg-white p-6 rounded-lg w-[350px]">
+                        <h2 className="text-lg font-semibold mb-2">Remove Item</h2>
+
+                        <p className="text-sm text-gray-500 mb-4">
+                            Remove <span className="font-semibold">
+                                {selectedItem.product?.productName}
+                            </span> from cart?
+                        </p>
+
+                        <div className="flex justify-end gap-3">
+                            <button
+                                onClick={() => {
+                                    setShowConfirm(false);
+                                    setSelectedItem(null);
+                                }}
+                                className="px-4 py-2 border rounded"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                onClick={async () => {
+                                    await removeItem(selectedItem.product?._id);
+                                    setShowConfirm(false);
+                                    setSelectedItem(null);
+                                }}
+                                className="px-4 py-2 bg-red-500 text-white rounded"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

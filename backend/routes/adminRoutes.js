@@ -1,5 +1,5 @@
 import express from 'express'
-import { loginAdmin, registerAdmin } from '../controllers/adminController.js';
+import { getDashboardStats, loginAdmin, registerAdmin } from '../controllers/adminController.js';
 
 const router = express.Router();
 
@@ -8,5 +8,8 @@ router.route('/register')
 
 router.route('/login')
     .post(loginAdmin)
+
+router.route('/dashboard')
+    .get(getDashboardStats)
 
 export default router;

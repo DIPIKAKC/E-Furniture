@@ -24,12 +24,12 @@ export default function Products() {
   return (
     <div>
 
-      <div className='flex items-center gap-4'>
-        <button onClick={() => setShowAddProduct(true)} className='flex items-center gap-2 mt-10 ml-20 py-2 px-5 bg-orange-100 text-gray-400 text-sm font-bold rounded-lg'>
+      <div className='flex items-center gap-4 mt-10 ml-20'>
+        <button onClick={() => setShowAddProduct(true)} className='flex items-center gap-2 py-2 px-5 bg-orange-100 text-gray-400 text-sm font-bold rounded-lg cursor-pointer'>
           <PlusCircleIcon size={18} />
           Add Product
         </button>
-        <button onClick={() => setShowAddCategory(true)} className='flex items-center gap-2 mt-10 py-2 px-5 bg-orange-100 text-gray-400 text-sm font-bold rounded-lg'>
+        <button onClick={() => setShowAddCategory(true)} className='flex items-center gap-2 py-2 px-5 bg-orange-100 text-gray-400 text-sm font-bold rounded-lg cursor-pointer'>
           <PlusCircleIcon size={18} />
           Add Category
         </button>

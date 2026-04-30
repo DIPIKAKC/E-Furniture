@@ -23,7 +23,7 @@ export default function AdminSidebar() {
     return (
         <aside className='w-fit h-screen border-r border-gray-100 flex flex-col justify-between px-5 bg-gray-50'>
 
-            <div className="px-5 py-10 border-b border-gray-100 flex items-center gap-3">
+            <div onClick={()=>nav('/admin/dashboard')} className="px-5 py-10 border-b border-gray-100 flex items-center gap-3 cursor-pointer">
                 <div className="w-8 h-8 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center">
                     <LayoutGridIcon size={25} className="text-amber-400" />
                 </div>

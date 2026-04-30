@@ -1,13 +1,15 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import Product from '../models/Product.js';
+import Order from '../models/Order.js';
 
 
 export const registerAdmin = async (req, res) => {
-    const { email, password } = req.body || {};
+    const { email, password, role } = req.body || {};
 
     try {
-        if (!email || !password) {
+        if (!email || !password || !role) {
             return res.status(400).json({
                 status: "error",
                 message: "all details are required",
@@ -27,6 +29,7 @@ export const registerAdmin = async (req, res) => {
         const newUser = await User.create({
             email,
             password: hashPass,
+            role
         });
         return res.status(200).json({
             status: "success",
@@ -34,6 +37,7 @@ export const registerAdmin = async (req, res) => {
             data: {
                 id: newUser._id,
                 email: newUser.email,
+                role: newUser.role
             }
         })
 
@@ -61,6 +65,13 @@ export const loginAdmin = async (req, res) => {
             data: "User doesnot exist"
         })
 
+        
+        if (account.role !== "admin") {
+            return res.status(403).json({
+                message: "Not an admin account"
+            });
+        }
+
         const isMatch = await bcrypt.compare(password, account.password);
         if (!isMatch) return res.status(400).json({
             status: 'error',
@@ -68,7 +79,11 @@ export const loginAdmin = async (req, res) => {
         });
 
         const token = jwt.sign(
-            { id: account.id, },
+            {
+                id: account.id,
+                email: account.email,
+                role: account.role
+            },
             process.env.JWT_SECRET_KEY,
             { expiresIn: "7d" }
         );
@@ -91,3 +106,26 @@ export const loginAdmin = async (req, res) => {
         })
     }
 }
+
+
+export const getDashboardStats = async (req, res) => {
+    try {
+        const users = await User.countDocuments();
+        const products = await Product.countDocuments();
+        const orders = await Order.countDocuments();
+
+        return res.status(200).json({
+            status: 'success',
+            data: {
+                users: users,
+                products: products,
+                orders: orders
+            },
+        })
+    } catch (error) {
+        res.status(500).json({
+            status: 'error',
+            message: error.message
+        })
+    }
+};

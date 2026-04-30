@@ -125,7 +125,7 @@ export default function ProductDetail() {
                             <Star size={20} />
                             <StarHalfIcon size={20} />
                         </div>
-                        <p className='text-balance'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt ex expedita eos vero commodi impedit officiis quod itaque cumque debitis nulla ratione et accusantium, quae iste quis dolore unde? Veniam ratione ipsam consequuntur iusto similique cumque? Iusto, sequi asperiores? Rem quisquam, iste natus unde est cumque suscipit doloremque ducimus ullam.</p>
+                        <p className='text-balance'>{product.description}</p>
                         <div className='flex flex-col gap-1'>
                             <h5 className=' text-lg text-gray-400'>Size</h5>
                             <div className='flex items-center gap-2'>

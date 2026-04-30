@@ -28,7 +28,7 @@ export const protect = (req, res, next) => {
 };
 
 export const admin = (req, res, next) => {
-    if (req.user && req.user.isAdmin) {
+    if (req.user?.role === "admin") {
         next();
     } else {
         return res.status(403).json({
