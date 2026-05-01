@@ -40,7 +40,7 @@ export default function Profile() {
                 <div className="w-[550px] bg-white shadow-lg rounded-3xl">
                     <div className="flex items-center gap-5 bg-amber-200 py-5 px-10 rounded-t-3xl">
                         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-amber-500 text-xl font-bold text-white border-1 border-white">
-                            {data?.user?.firstName.charAt(0).toUpperCase()}
+                            {data?.user?.firstName?.charAt(0).toUpperCase() || "U"}
                         </div>
                         <div>
                             <p className="mt-1 text-base font-semibold text-amber-500">
