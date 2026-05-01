@@ -40,9 +40,15 @@ export default function EditProduct({ onClose, product }) {
                             formData.append("category", values.category);
 
                             // comma
-                            formData.append("tags", JSON.stringify(values.tags.split(",")));
-                            formData.append("sizes", JSON.stringify(values.sizes.split(",")));
-                            formData.append("colors", JSON.stringify(values.colors.split(",")));
+                            formData.append("tags", JSON.stringify(
+                                values.tags.split(",").map(s => s.trim())
+                            ));
+                            formData.append("sizes", JSON.stringify(
+                                values.sizes.split(",").map(s => s.trim())
+                            ));
+                            formData.append("colors", JSON.stringify(
+                                values.colors.split(",").map(s => s.trim())
+                            ));
 
                             // multiple images
                             values.images.forEach((file) => {
