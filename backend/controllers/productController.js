@@ -105,10 +105,13 @@ export const updateProduct = async (req, res) => {
             ...(description && { description }),
             ...(category && { category }),
             ...(rating && { rating }),
-            ...(tags && { tags: tags }),
-            ...(sizes && { sizes: sizes }),
-            ...(colors && { colors: colors }),
-            ...(images && { images }),
+            ...(tags && { tags: JSON.parse(tags) }),
+            ...(sizes && { sizes: JSON.parse(sizes) }),
+            ...(colors && { colors: JSON.parse(colors) }),
+
+
+            ...(images.length > 0 && { images }),
+            
             rating,
             isHero
         }
@@ -280,7 +283,7 @@ export const getHeroProduct = async (req, res) => {
 
         return res.status(200).json({
             status: "success",
-            data:product
+            data: product
         })
     } catch (error) {
         return res.status(500).json({
