@@ -23,8 +23,8 @@ export default function Home() {
 
             <div className='w-full h-screen bg-yellow-200 flex items-center justify-end gap-60'>
                 <div className='flex flex-col gap-3 ml-20'>
-                    <h1 className='text-6xl font-semibold cursor-pointer'>{hero.productName}</h1>
-                    <h2 onClick={() => nav(`products/${hero._id}`)} className='text-2xl underline cursor-pointer'>Shop now</h2>
+                    <h1 className='text-6xl font-semibold cursor-pointer'>{hero?.productName}</h1>
+                    <h2 onClick={() => nav(`products/${hero?._id}`)} className='text-2xl underline cursor-pointer'>Shop now</h2>
                 </div>
                 <img className='h-200' src={hero?.images?.[0]} alt="" />
             </div>
