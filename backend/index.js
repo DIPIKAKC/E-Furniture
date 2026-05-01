@@ -22,8 +22,8 @@ const app = express();
 
 
 app.use(cors({
-    origin: ['http://localhost:5174',
-        
+    origin: ["http://localhost:5174",
+        "https://e-furniture-ivory.vercel.app/"
     ], //frontend URL
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
