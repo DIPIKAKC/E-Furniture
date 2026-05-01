@@ -12,20 +12,21 @@ export default function Home() {
     const { data: newArrival } = useGetNewArrivalQuery();
     const { data: heroProduct } = useGetHeroProductQuery();
 
-    const hero = heroProduct?.product;
+    const hero = heroProduct?.data;
 
+    console.log("hero",hero)
     const newProduct = newArrival?.products;
     console.log("newProduct", newProduct)
-    
+
     return (
         <div>
 
             <div className='w-full h-screen bg-yellow-200 flex items-center justify-end gap-60'>
                 <div className='flex flex-col gap-3 ml-20'>
                     <h1 className='text-6xl font-semibold cursor-pointer'>{hero.productName}</h1>
-                    <h2 onClick={() => nav(`products/69f387b24318768f0a1538e1`)} className='text-2xl underline cursor-pointer'>Shop now</h2>
+                    <h2 onClick={() => nav(`products/${hero._id}`)} className='text-2xl underline cursor-pointer'>Shop now</h2>
                 </div>
-                <img className='h-200' src="https://next-js-template-0.vercel.app/_next/image?url=/Rocket%20single%20seater%201.png&w=1920&q=75" alt="" />
+                <img className='h-200' src={hero?.images?.[0]} alt="" />
             </div>
 
             <div className='grid grid-cols-2'>

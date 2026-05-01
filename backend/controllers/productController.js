@@ -279,7 +279,7 @@ export const getHeroProduct = async (req, res) => {
 
         return res.status(200).json({
             status: "success",
-            product
+            data:product
         })
     } catch (error) {
         return res.status(500).json({
