@@ -63,8 +63,8 @@ export default function Checkout() {
             <div className='relative'>
                 {/* absolute inset-0 makes overlay of fill the image */}
                 <div className="absolute inset-0 flex flex-col space-y-3 items-center justify-center z-10">
-                    <MountainIcon size={40} className='text-gray-400' />
-                    <h1 className='font-bold text-2xl text-gray-400'>Shop</h1>
+                    <MountainIcon size={40} className='text-amber-500' />
+                    <h1 className='font-bold text-2xl text-amber-500'>Shop</h1>
                     <h2>
                         <Breadcrumb />
                     </h2>
@@ -254,7 +254,7 @@ export default function Checkout() {
                 </div>
             </div >
 
-            <div className='w-full bg-red-200 p-20 flex justify-between'>
+            <div className='w-full bg-red-50 p-20 flex justify-between'>
                 <div>
                     <h1 className='font-bold text-2xl'>Free Delivery</h1>
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas, nostrum </p>
