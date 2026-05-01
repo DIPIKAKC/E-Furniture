@@ -8,7 +8,7 @@ router.route('/register')
     .post(admin, registerAdmin)
 
 router.route('/login')
-    .post(admin, loginAdmin)
+    .post(loginAdmin)
 
 router.route('/dashboard')
     .get(admin, getDashboardStats)

@@ -1,6 +1,7 @@
 import express from 'express'
 import { addProduct, deleteProduct, getAllProducts, getHeroProduct, getNewArrival, getProductById, getRecentProducts, getTopProducts, updateProduct } from '../controllers/productController.js';
 import { upload } from '../utils/cloudinary.js';
+import { admin, protect } from '../middleware/checkUser.js';
 
 const router = express.Router();
 
@@ -23,8 +24,8 @@ router.route('/hero')
 
 router.route('/:id')
     .get(getProductById)
-    .patch(upload.array('images', 5), updateProduct)
-    .delete(deleteProduct)
+    .patch(protect, admin, upload.array('images', 5), updateProduct)
+    .delete(protect, admin, deleteProduct)
 
 
 export default router;
