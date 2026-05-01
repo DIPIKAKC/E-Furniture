@@ -79,6 +79,8 @@ export default function Shop() {
                 <div className="py-10 px-20 grid grid-cols-4 gap-8">
                     {isLoading ? (
                         <p>Loading...</p>
+                    ) : products.length === 0 ? (
+                        <p>No products found</p>
                     ) : (
                         products.map((p) => (
                             <ProductCard key={p._id} product={p} />
