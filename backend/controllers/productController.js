@@ -94,7 +94,8 @@ export const updateProduct = async (req, res) => {
             tags,
             sizes,
             colors,
-            rating
+            rating,
+            isHero
         } = req.body || {};
         const images = req.files?.map(file => file.path) ?? [];
 
@@ -108,6 +109,7 @@ export const updateProduct = async (req, res) => {
             ...(sizes && { sizes: sizes }),
             ...(colors && { colors: colors }),
             ...(images && { images }),
+            isHero
         }
 
         const updatedProduct = await Product.findByIdAndUpdate(
@@ -264,8 +266,28 @@ export const getProductById = async (req, res) => {
             singleProduct
         })
     } catch (error) {
-        return res.status(500).json({ status: "error", message: error.message })
+        return res.status(500).json({
+            status: "error",
+            message: error.message
+        })
     }
 }
+
+export const getHeroProduct = async (req, res) => {
+    try {
+        const product = await Product.findOne({ isHero: true });
+
+        return res.status(200).json({
+            status: "success",
+            product
+        })
+    } catch (error) {
+        return res.status(500).json({
+            status: "error",
+            message: error.message
+        })
+    }
+}
+
 
 

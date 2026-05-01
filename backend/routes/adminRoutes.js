@@ -1,15 +1,16 @@
 import express from 'express'
 import { getDashboardStats, loginAdmin, registerAdmin } from '../controllers/adminController.js';
+import { admin } from '../middleware/checkUser.js';
 
 const router = express.Router();
 
 router.route('/register')
-    .post(registerAdmin)
+    .post(admin, registerAdmin)
 
 router.route('/login')
-    .post(loginAdmin)
+    .post(admin, loginAdmin)
 
 router.route('/dashboard')
-    .get(getDashboardStats)
+    .get(admin, getDashboardStats)
 
 export default router;

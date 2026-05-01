@@ -2,7 +2,7 @@ import React from 'react'
 import ProductCard from '../../components/global/ProductCard'
 import BlogCard from '../../components/global/BlogCard'
 import { useNavigate } from 'react-router-dom'
-import { useGetNewArrivalQuery, useGetRecentProductsQuery, useGetTopProductsQuery } from '../../API/Product/productApi';
+import { useGetHeroProductQuery, useGetNewArrivalQuery, useGetRecentProductsQuery, useGetTopProductsQuery } from '../../API/Product/productApi';
 
 export default function Home() {
     const nav = useNavigate();
@@ -10,14 +10,19 @@ export default function Home() {
     const { data: topProducts } = useGetTopProductsQuery();
     const { data: recentProducts } = useGetRecentProductsQuery();
     const { data: newArrival } = useGetNewArrivalQuery();
+    const { data: heroProduct } = useGetHeroProductQuery();
+
+    const hero = heroProduct?.product;
+
     const newProduct = newArrival?.products;
     console.log("newProduct", newProduct)
+    
     return (
         <div>
 
             <div className='w-full h-screen bg-yellow-200 flex items-center justify-end gap-60'>
                 <div className='flex flex-col gap-3 ml-20'>
-                    <h1 className='text-6xl font-semibold cursor-pointer'>Rocket Single <br /> Chair</h1>
+                    <h1 className='text-6xl font-semibold cursor-pointer'>{hero.productName}</h1>
                     <h2 onClick={() => nav(`products/69f387b24318768f0a1538e1`)} className='text-2xl underline cursor-pointer'>Shop now</h2>
                 </div>
                 <img className='h-200' src="https://next-js-template-0.vercel.app/_next/image?url=/Rocket%20single%20seater%201.png&w=1920&q=75" alt="" />
@@ -75,7 +80,7 @@ export default function Home() {
                 <div className='flex flex-col gap-8'>
                     <h2 className='font-semibold text-2xl flex justify-center'>New Arrivals</h2>
                     <h1 className='text-6xl font-semibold'>{newProduct?.productName}</h1>
-                    <button  onClick={()=>nav(`/products/${newProduct._id}`)} className='py-4 border-3 text-xl cursor-pointer'>Order Now</button>
+                    <button onClick={() => nav(`/products/${newProduct._id}`)} className='py-4 border-3 text-xl cursor-pointer'>Order Now</button>
                 </div>
             </div>
 

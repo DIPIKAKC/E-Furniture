@@ -1,5 +1,5 @@
 import express from 'express'
-import { addProduct, deleteProduct, getAllProducts, getNewArrival, getProductById, getRecentProducts, getTopProducts, updateProduct } from '../controllers/productController.js';
+import { addProduct, deleteProduct, getAllProducts, getHeroProduct, getNewArrival, getProductById, getRecentProducts, getTopProducts, updateProduct } from '../controllers/productController.js';
 import { upload } from '../utils/cloudinary.js';
 
 const router = express.Router();
@@ -16,6 +16,10 @@ router.route('/recent')
 
 router.route('/newarrival')
     .get(getNewArrival)
+
+router.route('/hero')
+    .get(getHeroProduct)
+
 
 router.route('/:id')
     .get(getProductById)

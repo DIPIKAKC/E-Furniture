@@ -59,6 +59,11 @@ const productSchema = new mongoose.Schema({
         default: 0
     },
 
+    isHero: {
+        type: Boolean,
+        default: false
+    }
+
 
 }, { timestamps: true })
 

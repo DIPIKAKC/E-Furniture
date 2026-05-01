@@ -76,6 +76,13 @@ export const productApi = mainApi.injectEndpoints({
             providesTags: ['Product']
         }),
 
+        getHeroProduct: builder.query({
+            query: () => ({
+                url: 'products/hero',
+                method: 'GET',
+            }),
+            providesTags: ['Product']
+        }),
 
         //cat
         addCategory: builder.mutation({
@@ -94,10 +101,10 @@ export const productApi = mainApi.injectEndpoints({
             }),
             providesTags: ['Product']
         }),
-
+        
     }),
 
 
 })
 
-export const { useAddProductMutation, useUpdateProductMutation, useDeleteProductMutation, useGetAllProductsQuery, useGetTopProductsQuery, useGetRecentProductsQuery, useGetNewArrivalQuery, useGetSingleProductQuery, useAddCategoryMutation, useGetAllCategoriesQuery } = productApi;
+export const { useAddProductMutation, useUpdateProductMutation, useDeleteProductMutation, useGetAllProductsQuery, useGetTopProductsQuery, useGetRecentProductsQuery, useGetNewArrivalQuery, useGetSingleProductQuery, useGetHeroProductQuery, useAddCategoryMutation, useGetAllCategoriesQuery } = productApi;
