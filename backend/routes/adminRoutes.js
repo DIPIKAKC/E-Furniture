@@ -11,6 +11,6 @@ router.route('/login')
     .post(loginAdmin)
 
 router.route('/dashboard')
-    .get(admin, getDashboardStats)
+    .get(getDashboardStats)
 
 export default router;
