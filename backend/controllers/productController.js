@@ -109,6 +109,7 @@ export const updateProduct = async (req, res) => {
             ...(sizes && { sizes: sizes }),
             ...(colors && { colors: colors }),
             ...(images && { images }),
+            rating,
             isHero
         }
 
