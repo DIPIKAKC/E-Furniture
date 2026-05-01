@@ -17,9 +17,7 @@ export default function Profile() {
     console.log("orderdata", orders)
 
 
-    if (isLoading) return <p>Loading...</p>;
-    if (error) return <p className="text-red-500">{error?.data?.message}</p>;
-
+    
     const schema = Yup.object({
         firstName: Yup.string().min(2).required("Required"),
         lastName: Yup.string().min(2).required("Required"),
@@ -27,7 +25,10 @@ export default function Profile() {
         phone: Yup.string().required("Required"),
         address: Yup.string().required("Required"),
     });
-
+    
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p className="text-red-500">{error?.data?.message}</p>;
+    if (!data?.user) return <p>Loading profile...</p>;
     return (
         <div className="flex justify-evenly p-7 ">
 
