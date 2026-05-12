@@ -15,6 +15,7 @@ import AdminLogin from "./Pages/Admin/auth/AdminLogin";
 import Dashboard from "./Pages/Admin/Dashboard";
 import AdminLayout from "./components/admin/AdminLayout";
 import Products from "./Pages/Admin/Products";
+import OauthSuccess from "./Pages/User/OauthSucess";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: '/authentication',
         element: <Authentication />
+      },
+      {
+        path: "/oauth-success",
+        element: <OauthSuccess />
       },
       {
         path: '/checkout',

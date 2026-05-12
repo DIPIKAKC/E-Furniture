@@ -31,7 +31,7 @@ export default function Login() {
                     email: '',
                     password: '',
                 }}
-                onSubmit={async (val, {resetForm}) => {
+                onSubmit={async (val, { resetForm }) => {
                     try {
                         const response = await userLogin(val).unwrap();
                         dispatch(setUser({
@@ -110,10 +110,18 @@ export default function Login() {
                                 />
                                 Remember me
                             </label>
-                            
-                            <Button type="submit">
-                                Login
-                            </Button>
+
+                            <div>
+                                <Button type="submit">
+                                    Login
+                                </Button>
+                                <Button
+                                    type="button"
+                                    onClick={() => window.location.href = "https://e-furniture-e9vv.onrender.com/auth/google"}
+                                >
+                                    Login with Google
+                                </Button>
+                            </div>
 
                         </div>
                     </form>
