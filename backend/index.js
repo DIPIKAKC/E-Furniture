@@ -11,9 +11,9 @@ console.log(process.env.CLOUD_NAME);
 
 import mongoose from 'mongoose';
 import cors from 'cors';
-import session from "express-session";
 
-import passport from './config/passport.js';
+import passport from "passport";
+import "./config/passport.js";
 
 import authRouter from './routes/authRoutes.js';
 import userRouter from './routes/userRoutes.js';
@@ -42,21 +42,8 @@ app.use(cors({
 
 app.use(express.json());
 
-
-// app.use(
-//   session({
-//     secret: "secretkey",
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
-
-// app.use(passport.session());
-
-
 app.use(passport.initialize());
 
-// app.use('/uploads', express.static('uploads'));
 
 
 const PORT = process.env.PORT || 5001;
