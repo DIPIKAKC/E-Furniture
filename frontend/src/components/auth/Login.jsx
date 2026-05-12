@@ -111,7 +111,7 @@ export default function Login() {
                                 Remember me
                             </label>
 
-                            <div>
+                            <div className='flex flex-col gap-2'>
                                 <Button type="submit">
                                     Login
                                 </Button>
