@@ -7,7 +7,11 @@ console.log(process.env.CLOUD_NAME);
 
 import mongoose from 'mongoose';
 import cors from 'cors';
+import session from "express-session";
 
+import passport from "./config/passport.js";
+
+import authRouter from './routes/authRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import adminRouter from './routes/adminRoutes.js';
 import productRouter from './routes/productRoutes.js';
@@ -35,6 +39,17 @@ app.use(cors({
 app.use(express.json());
 
 
+app.use(
+  session({
+    secret: "secretkey",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // app.use('/uploads', express.static('uploads'));
 
 
@@ -45,6 +60,7 @@ app.get("/", (req, res) => {
 })
 
 
+app.use('/', authRouter);
 app.use('/api', userRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/products', productRouter);

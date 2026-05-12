@@ -14,6 +14,12 @@ const userSchema = new mongoose.Schema({
         unique: true,
     },
 
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true
+    },
+
     // ^ => Start of password
     // (?=.*[A-Za-z]) => Must contain at least one letter
     // (?=.*\d) => Must contain at least one number
@@ -21,7 +27,7 @@ const userSchema = new mongoose.Schema({
     // $ => End of password
     password: {
         type: String,
-        required: true,
+        required: false,
         match: [
             /^(?=.*[A-Za-z])(?=.*\d).{6,}$/,
             "Password must contain at least one letter, one number, and be at least 6 characters long"
