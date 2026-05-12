@@ -106,22 +106,20 @@ export default function Signup() {
                                 </p>}
                             </div>
 
-                            <div className='flex flex-col gap-2'>
-                                <Button type="submit">
-                                    Signup
-                                </Button>
-                                <Button
-                                    type="button"
-                                    onClick={() => window.location.href = "https://e-furniture-e9vv.onrender.com/auth/google"}
-                                >
-                                    Signup with Google
-                                </Button>
-                            </div>
+                            <Button type="submit">
+                                Signup
+                            </Button>
 
                         </div>
                     </form>
                 )}
             </Formik>
+            <Button
+                type="button"
+                onClick={() => window.location.href = "https://e-furniture-e9vv.onrender.com/auth/google"}
+            >
+                Signup with Google
+            </Button>
 
         </div>
     )
