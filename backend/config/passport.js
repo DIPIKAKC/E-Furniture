@@ -24,6 +24,12 @@ passport.use(
           return done(null, existingUser); // LOGIN
         }
 
+        const emailUser = await User.findOne({
+          email: profile.emails?.[0]?.value
+        });
+
+        if (emailUser) return done(null, emailUser);
+
         const newUser = await User.create({
           googleId: profile.id,
           email: profile?.emails[0]?.value,

@@ -6,7 +6,10 @@ import { googleAuthFailure, googleAuthSuccess } from "../controllers/authControl
 const router = express.Router();
 
 router.route('/auth/google')
-    .get(passport.authenticate("google", { scope: ["profile", "email"] }))
+    .get(passport.authenticate("google", {
+        scope: ["profile", "email"],
+        prompt: "select_account"
+    }))
 
 router.route('/auth/google/callback')
     .get(
