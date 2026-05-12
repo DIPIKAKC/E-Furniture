@@ -5,7 +5,7 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import User from "../models/User.js";
 
-console.log("google id:",process.env.GOOGLE_CLIENT_ID)
+console.log("google id:", process.env.GOOGLE_CLIENT_ID)
 passport.use(
   new GoogleStrategy(
     {
@@ -15,17 +15,19 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        let user = await User.findOne({ googleId: profile.id });
+        const existingUser = await User.findOne({ googleId: profile.id });
 
-        if (!user) {
-          user = await User.create({
-            googleId: profile.id,
-            username: profile.displayName,
-            email: profile.emails[0].value,
-          });
+        if (existingUser) {
+          return done(null, existingUser); // LOGIN
         }
 
-        return done(null, user);
+        const newUser = await User.create({
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          name: profile.displayName,
+        });
+
+        return done(null, newUser); // SIGNUP
       } catch (error) {
         return done(error, null);
       }
