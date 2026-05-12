@@ -114,7 +114,7 @@ export default function Signup() {
                                     type="button"
                                     onClick={() => window.location.href = "https://e-furniture-e9vv.onrender.com/auth/google"}
                                 >
-                                    Login with Google
+                                    Signup with Google
                                 </Button>
                             </div>
 
