@@ -33,7 +33,7 @@ export default function Signup() {
                     email: "",
                     password: "",
                 }}
-                onSubmit={async (val,{resetForm}) => {
+                onSubmit={async (val, { resetForm }) => {
                     try {
                         const response = await userRegister(val).unwrap();
                         toast.success('User Registered Successfully');
@@ -106,9 +106,17 @@ export default function Signup() {
                                 </p>}
                             </div>
 
-                            <Button type="submit">
-                                Signup
-                            </Button>
+                            <div className='flex flex-col gap-2'>
+                                <Button type="submit">
+                                    Signup
+                                </Button>
+                                <Button
+                                    type="button"
+                                    onClick={() => window.location.href = "https://e-furniture-e9vv.onrender.com/auth/google"}
+                                >
+                                    Login with Google
+                                </Button>
+                            </div>
 
                         </div>
                     </form>
