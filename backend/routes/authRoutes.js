@@ -8,7 +8,7 @@ const router = express.Router();
 router.route('/auth/google')
     .get(passport.authenticate("google", {
         scope: ["profile", "email"],
-        prompt: "select_account"
+        prompt: "select_account consent"
     }))
 
 router.route('/auth/google/callback')
