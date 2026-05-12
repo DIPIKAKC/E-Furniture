@@ -1,6 +1,10 @@
 import jwt from "jsonwebtoken";
 
 export const googleAuthSuccess = (req, res) => {
+    if (!req.user) {
+        return res.redirect("https://e-furniture-ivory.vercel.app/authentication");
+    }
+
     const token = jwt.sign(
         {
             id: req.user._id,

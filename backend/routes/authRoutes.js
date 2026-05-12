@@ -10,7 +10,10 @@ router.route('/auth/google')
 
 router.route('/auth/google/callback')
     .get(
-        passport.authenticate("google", { failureRedirect: "/auth/failure" }),
+        passport.authenticate("google", {
+            failureRedirect: "/auth/failure",
+            session: false
+        }),
         googleAuthSuccess
     );
 

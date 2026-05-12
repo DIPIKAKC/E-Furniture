@@ -42,8 +42,16 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use(passport.initialize());
+// app.use(
+//     session({
+//         secret: "secretkey",
+//         resave: false,
+//         saveUninitialized: false,
+//     })
+// );
 
+app.use(passport.initialize());
+// app.use(passport.session());
 
 
 const PORT = process.env.PORT || 5001;
