@@ -5,11 +5,15 @@ console.log(process.env.API_KEY);
 console.log(process.env.API_SECRET);
 console.log(process.env.CLOUD_NAME);
 
+// console.log("google client id:", process.env.GOOGLE_CLIENT_ID)
+// console.log("google secret:", process.env.GOOGLE_CLIENT_SECRET)
+// console.log("google url:", process.env.GOOGLE_CALLBACK_URL)
+
 import mongoose from 'mongoose';
 import cors from 'cors';
 import session from "express-session";
 
-import passport from "./config/passport.js";
+import passport from './config/passport.js';
 
 import authRouter from './routes/authRoutes.js';
 import userRouter from './routes/userRoutes.js';
