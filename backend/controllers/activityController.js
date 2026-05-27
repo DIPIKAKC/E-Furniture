@@ -83,17 +83,31 @@ export const addReview = async (req, res) => {
         const productId = req.params?.productId;
         const userId = req.user?.id;
 
+        // Check if user purchased the product
+        const hasPurchased = await Order.findOne({
+            user: userId,
+            "orderItems.product": productId
+        });
+
+        if (!hasPurchased) {
+            return res.status(403).json({
+                success: false,
+                message: "You can only review products you purchased"
+            });
+        }
+        
+        // Check if already reviewed
         const existingReview = await Review.findOne({
             product: productId,
             user: userId
         });
 
-        // if (existingReview) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "You already reviewed this product"
-        //     });
-        // }
+        if (existingReview) {
+            return res.status(400).json({
+                success: false,
+                message: "You already reviewed this product"
+            });
+        }
 
         const review = await Review.create({
             product: productId,
