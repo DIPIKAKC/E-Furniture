@@ -255,6 +255,7 @@ import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { openCart } from '../../API/Slice/cartSlice';
 import { useAddToWishlistMutation } from '../../API/Wishlist/wishlistApi';
+import { useAddReviewMutation, useGetReviewsQuery } from '../../API/Review/reviewApi';
 
 export default function ProductDetail() {
     const dispatch = useDispatch();
@@ -293,6 +294,12 @@ export default function ProductDetail() {
 
     const [addToCart, { isLoading: addingToCart }] = useAddToCartMutation();
 
+    const [reviewText, setReviewText] = useState("");
+    const [rating, setRating] = useState(5);
+    const [addReview, { isLoading: Load }] = useAddReviewMutation();
+    const { data: reviewData, isLoading: reviewLoading } = useGetReviewsQuery({ productId: id });
+    const reviews = reviewData?.data || [];
+
     const handleAddToCart = async () => {
         try {
             if (!userId) {
@@ -320,11 +327,34 @@ export default function ProductDetail() {
         }
     }
 
+    const handleReviewSubmit = async () => {
+        try {
+            const formData = {
+                rating,
+                comment: reviewText
+            };
+
+            const response = await addReview({
+                productId: product?._id,
+                formData
+            }).unwrap();
+
+            toast.success("revoew added")
+            console.log(response);
+
+            setReviewText("");
+
+        } catch (error) {
+            toast.error(error.message);
+            console.log(error.message || data?.message);
+        }
+    };
+
     if (isLoading) return <h1 className="text-center text-white">Loading...</h1>;
     if (error) return <h1 className="text-center text-red-500">Error loading the product</h1>;
     return (
         <div>
-            <div className='bg-amber-100 py-8 px-20'>
+            <div className='py-6 px-28'>
                 <Breadcrumb productName={product?.productName} />
             </div>
 
@@ -485,15 +515,63 @@ export default function ProductDetail() {
 
                     {activeTab === "reviews" && (
                         <div>
-                            <h3 className="text-xl font-semibold mb-4">Customer Reviews</h3>
-                            <p>No reviews yet</p>
+                            <h3 className="text-xl font-semibold mb-4">
+                                Customer Reviews
+                            </h3>
+                            {/* reviews list */}
+                            <div className='flex flex-col gap-4 mb-6'>
 
+                                {reviews.length > 0 ? (
+                                    reviews.map((review) => (
+                                        <div
+                                            key={review._id}
+                                            className='p-4 rounded-xl shadow'
+                                        >
+                                            <div className='flex gap-2'>
+                                                <h4 className='font-semibold uppercase'>
+                                                    {review?.user?.username}
+                                                </h4>
+
+                                                {/* array(5) makes 5 empty items for 5 stars, .map loops 5 times  */}
+                                                <div className="flex items-center gap-1">
+                                                    {[...Array(5)].map((_, index) => (
+                                                        <Star
+                                                            key={index}
+                                                            size={16}
+                                                            className={
+                                                                // condition true for when ondex is less that rating i.e. true upto index-3<review-4. So, 4 stars yellow and 1 grey
+                                                                index < review.rating
+                                                                    ? "fill-yellow-400 text-yellow-400"
+                                                                    : "text-gray-300"
+                                                            }
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <p className='text-gray-600'>
+                                                {review.comment}
+                                            </p>
+
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>No reviews yet</p>
+                                )}
+                            </div>
+
+                            {/* add review */}
                             <textarea
+                                value={reviewText}
+                                onChange={(e) => setReviewText(e.target.value)}
                                 className="border w-full p-3 rounded-lg mt-3"
                                 placeholder="Write your review..."
                             />
-                            <button className="mt-3 px-4 py-2 border rounded-lg">
-                                Submit Review
+
+                            <button
+                                onClick={handleReviewSubmit}
+                                className="mt-3 px-4 py-2 border rounded-lg"
+                            >
+                                {Load ? "Submitting..." : "Submit Review"}
                             </button>
                         </div>
                     )}
