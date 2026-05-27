@@ -1,3 +1,4 @@
+import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import Review from "../models/Review.js";
 import User from "../models/User.js";
@@ -95,7 +96,7 @@ export const addReview = async (req, res) => {
                 message: "You can only review products you purchased"
             });
         }
-        
+
         // Check if already reviewed
         const existingReview = await Review.findOne({
             product: productId,
