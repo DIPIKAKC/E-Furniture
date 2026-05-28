@@ -531,9 +531,8 @@ export default function ProductDetail() {
                                                 <h4 className='font-semibold uppercase'>
                                                     {review?.user?.username}
                                                 </h4>
-
                                                 {/* array(5) makes 5 empty items for 5 stars, .map loops 5 times  */}
-                                                <div className="flex items-center gap-1">
+                                                <div className="flex items-center gap-1 mt-3">
                                                     {[...Array(5)].map((_, index) => (
                                                         <Star
                                                             key={index}
@@ -548,6 +547,7 @@ export default function ProductDetail() {
                                                     ))}
                                                 </div>
                                             </div>
+
                                             <p className='text-gray-600'>
                                                 {review.comment}
                                             </p>
@@ -560,6 +560,23 @@ export default function ProductDetail() {
                             </div>
 
                             {/* add review */}
+
+                            {/* rating selector */}
+                            <div className="flex items-center gap-1 mt-3">
+                                {[...Array(5)].map((_, index) => (
+                                    <Star
+                                        key={index}
+                                        size={22}
+                                        onClick={() => setRating(index + 1)}
+                                        className={`cursor-pointer transition
+                                                     ${index < rating
+                                                ? "fill-yellow-400 text-yellow-400"
+                                                : "text-gray-300"
+                                            }`}
+                                    />
+                                ))}
+                            </div>
+
                             <textarea
                                 value={reviewText}
                                 onChange={(e) => setReviewText(e.target.value)}
