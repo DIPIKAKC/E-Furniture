@@ -103,12 +103,12 @@ export const addReview = async (req, res) => {
             user: userId
         });
 
-        if (existingReview) {
-            return res.status(400).json({
-                success: false,
-                message: "You already reviewed this product"
-            });
-        }
+        // if (existingReview) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "You already reviewed this product"
+        //     });
+        // }
 
         const review = await Review.create({
             product: productId,
