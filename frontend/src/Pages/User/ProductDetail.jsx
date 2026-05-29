@@ -338,15 +338,18 @@ export default function ProductDetail() {
                 productId: product?._id,
                 formData
             }).unwrap();
-
-            toast.success("revoew added")
+            
+            toast.success("Review added successfully")
             console.log(response);
-
+            
             setReviewText("");
-
+            setRating(5);
+            
         } catch (error) {
-            toast.error(error.message);
-            console.log(error.message || data?.message);
+            toast.error(error.message || error?.data?.message || "Something went wrong");
+            console.log(error.message || error?.data?.message);
+            setReviewText("");
+            setRating(5);
         }
     };
 
